@@ -82,7 +82,7 @@ async def send_start(client: pyrogram.client.Client, message: pyrogram.types.mes
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
-                        text="__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{Owner_username})__",
+                        text=f"__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{Owner_username})__",
                         disable_web_page_preview=True
                     )
                     return
@@ -103,12 +103,12 @@ async def send_start(client: pyrogram.client.Client, message: pyrogram.types.mes
             except Exception:
                 await app.send_message(
                     chat_id=message.chat.id,
-                    text="<i>Something went wrong</i> <b> <a href='https://telegram.me/{Owner_username}'>CLICK HERE FOR SUPPORT </a></b>",
+                    text=f"<i>Something went wrong</i> <b> <a href='https://telegram.me/{Owner_username}'>CLICK HERE FOR SUPPORT </a></b>",
 
                     disable_web_page_preview=True)
                 return
     await app.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, i am Link Bypasser Bot, just send me any supported links and i will you get you results.\nCheckout /help to Read More__",
-                           reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("❤️ Owner ❤️", url="https://telegram.me/{Owner_username}")]]), reply_to_message_id=message.id)
+                           reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("❤️ Owner ❤️", url=f"https://telegram.me/{Owner_username}")]]), reply_to_message_id=message.id)
 
 
 # help command
@@ -121,7 +121,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
-                        text="__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{Owner_username})__",
+                        text=f"__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{Owner_username})__",
                         disable_web_page_preview=True
                     )
                     return
@@ -142,7 +142,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
             except Exception:
                 await app.send_message(
                     chat_id=message.chat.id,
-                    text="<i>Something went wrong</i> <b> <a href='https://telegram.me/{Owner_username}'>CLICK HERE FOR SUPPORT </a></b>",
+                    text=f"<i>Something went wrong</i> <b> <a href='https://telegram.me/{Owner_username}'>CLICK HERE FOR SUPPORT </a></b>",
 
                     disable_web_page_preview=True)
                 return
@@ -194,7 +194,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
     else:
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
 
-@app.on_message(filters.command(["admins"]))
+@app.on_message(filters.command(["admin"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if message.chat.id in Admin_list or message.from_user.id in Admin_list :
         lol = "List Of Admin ID's\n"
@@ -214,7 +214,7 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
-                        text="__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{Owner_username})__",
+                        text=f"__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{Owner_username})__",
                         disable_web_page_preview=True
                     )
                     return
@@ -235,7 +235,7 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
             except Exception:
                 await app.send_message(
                     chat_id=message.chat.id,
-                    text="<i>Something went wrong</i> <b> <a href='https://telegram.me/{Owner_username}'>CLICK HERE FOR SUPPORT </a></b>",
+                    text=f"<i>Something went wrong</i> <b> <a href='https://telegram.me/{Owner_username}'>CLICK HERE FOR SUPPORT </a></b>",
 
                     disable_web_page_preview=True)
                 return
