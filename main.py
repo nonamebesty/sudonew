@@ -161,7 +161,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if message.chat.id in Owner_id :
         msg = int(message.text.split()[-1])
-        if msg in group_id:
+        if msg not in group_id:
             await app.send_message(message.chat.id, f"Already Removed", reply_to_message_id=message.id, disable_web_page_preview=True)
         else :
             group_id.remove(msg)
