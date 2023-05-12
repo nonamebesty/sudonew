@@ -18,15 +18,12 @@ bot_token = os.environ.get("TOKEN", "")
 api_hash = os.environ.get("HASH", "") 
 api_id = os.environ.get("ID", "")
 Owner_id = os.environ.get("Owner_id", "5175000602")
-Admin_list = [int(ch) for ch in (os.environ.get("Admin_list", "")).split()]
+Admin_list = [int(ch) for ch in (os.environ.get("Admin_list", "5175000602")).split()]
 Owner_username = os.environ.get("Owner_username", "Rushidhar1999")
 Permanent_group = os.environ.get("Permanent_group", "-1001776558320")
-group_id = [int(ch) for ch in (os.environ.get("group_id", "")).split()]
+group_id = [int(ch) for ch in (os.environ.get("group_id", "-1001776558320")).split()]
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
-
-Admin_list.append(Owner_id)
-group_id.append(Permanent_group)
 
 # handle ineex
 def handleIndex(ele,message,msg):
