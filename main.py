@@ -18,6 +18,7 @@ bot_token = os.environ.get("TOKEN", "")
 api_hash = os.environ.get("HASH", "") 
 api_id = os.environ.get("ID", "")
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
+group_id = os.environ.get("group_id", "-1001544172274 5175000602")
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
 
 
@@ -74,7 +75,7 @@ def loopthread(message):
 async def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if UPDATES_CHANNEL != "None":
         try:
-            user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
+            user = await app.get_chat_member(UPDATES_CHANNEL, message.reply_to_message.from_user.id)
             if user.status == enums.ChatMemberStatus.BANNED:
                 await app.send_message(
                     chat_id=message.chat.id,
