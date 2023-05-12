@@ -198,10 +198,10 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
     if message.chat.id in Admin_list or message.from_user.id in Admin_list :
         lol = "List Of Authorized Chats\n\n"
         for i in group_id:
-            lol += "<code> + "str(i) + "</code>\n"
+            lol += "<code>" + str(i) + "</code>\n"
         lol += "\n\nList Of Admin ID's\n\n"
         for i in Admin_list:
-            lol += "<code> + "str(i) + "</code>\n"
+            lol += "<code>" + str(i) + "</code>\n"
         await app.send_message(message.chat.id, lol, reply_to_message_id=message.id, disable_web_page_preview=True)
     else :
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
