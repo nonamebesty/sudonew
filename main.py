@@ -287,7 +287,7 @@ def docthread(message):
         os.remove(file)
 
 @app.on_message(filters.document)
-def docfile(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+async def docfile(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if message.chat.id not in GROUP_ID:
         if UPDATES_CHANNEL != "None":
             try:
