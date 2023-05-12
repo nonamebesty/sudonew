@@ -17,7 +17,8 @@ import re
 bot_token = os.environ.get("TOKEN", "")
 api_hash = os.environ.get("HASH", "") 
 api_id = os.environ.get("ID", "")
-Owner_id = [int(ch) for ch in (os.environ.get("Owner_id", "5175000602")).split()]
+Admin_list = [int(ch) for ch in (os.environ.get("Admin_list", "5175000602")).split()]
+Owner_username = os.environ.get("Owner_username", "Rushidhar1999")
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
 group_id = [int(ch) for ch in (os.environ.get("group_id", "-1001776558320")).split()]
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
@@ -81,7 +82,7 @@ async def send_start(client: pyrogram.client.Client, message: pyrogram.types.mes
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
-                        text="__Sorry, you are banned. Contact My Owner [ Rushidhar ](https://telegram.me/Rushidhar1999)__",
+                        text="__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{Owner_username})__",
                         disable_web_page_preview=True
                     )
                     return
@@ -102,12 +103,12 @@ async def send_start(client: pyrogram.client.Client, message: pyrogram.types.mes
             except Exception:
                 await app.send_message(
                     chat_id=message.chat.id,
-                    text="<i>Something went wrong</i> <b> <a href='https://telegram.me/Rushidhar1999'>CLICK HERE FOR SUPPORT </a></b>",
+                    text="<i>Something went wrong</i> <b> <a href='https://telegram.me/{Owner_username}'>CLICK HERE FOR SUPPORT </a></b>",
 
                     disable_web_page_preview=True)
                 return
     await app.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, i am Link Bypasser Bot, just send me any supported links and i will you get you results.\nCheckout /help to Read More__",
-                           reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("❤️ Owner ❤️", url="https://telegram.me/Rushidhar1999")]]), reply_to_message_id=message.id)
+                           reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("❤️ Owner ❤️", url="https://telegram.me/{Owner_username}")]]), reply_to_message_id=message.id)
 
 
 # help command
@@ -120,7 +121,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
-                        text="__Sorry, you are banned. Contact My Owner [ Rushidhar ](https://telegram.me/Rushidhar1999)__",
+                        text="__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{Owner_username})__",
                         disable_web_page_preview=True
                     )
                     return
@@ -141,7 +142,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
             except Exception:
                 await app.send_message(
                     chat_id=message.chat.id,
-                    text="<i>Something went wrong</i> <b> <a href='https://telegram.me/Rushidhar1999'>CLICK HERE FOR SUPPORT </a></b>",
+                    text="<i>Something went wrong</i> <b> <a href='https://telegram.me/{Owner_username}'>CLICK HERE FOR SUPPORT </a></b>",
 
                     disable_web_page_preview=True)
                 return
@@ -149,7 +150,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 
 @app.on_message(filters.command(["list"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id in Owner_id or message.from_user.id in Owner_id :
+    if message.chat.id in Admin_list or message.from_user.id in Admin_list :
         lol = "List Of Authorized Chats\n"
         for i in group_id:
             lol += str(i) + "\n"
@@ -159,7 +160,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
         
 @app.on_message(filters.command(["rem"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id in Owner_id or message.from_user.id in Owner_id :
+    if message.chat.id in Admin_list or message.from_user.id in Admin_list :
         msg = int(message.text.split()[-1])
         if msg not in group_id:
             await app.send_message(message.chat.id, f"Already Removed", reply_to_message_id=message.id, disable_web_page_preview=True)
@@ -171,7 +172,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 
 @app.on_message(filters.command(["add"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id in Owner_id or message.from_user.id in Owner_id :
+    if message.chat.id in Admin_list or message.from_user.id in Admin_list :
         msg = int(message.text.split()[-1])
         if msg in group_id:
             await app.send_message(message.chat.id, f"Already Added", reply_to_message_id=message.id, disable_web_page_preview=True)
@@ -179,6 +180,28 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
             group_id.append(msg)
             await app.send_message(message.chat.id, f"{msg} is Added Temporarily", reply_to_message_id=message.id, disable_web_page_preview=True)
     else:
+        await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
+
+@app.on_message(filters.command(["addsudo"]))
+async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    if message.chat.id in Admin_list or message.from_user.id in Admin_list :
+        msg = int(message.text.split()[-1])
+        if msg in Admin_list:
+            await app.send_message(message.chat.id, f"Already Admin", reply_to_message_id=message.id, disable_web_page_preview=True)
+        else :
+            group_id.append(msg)
+            await app.send_message(message.chat.id, f"Promoted As Admin Temporarily", reply_to_message_id=message.id, disable_web_page_preview=True)
+    else:
+        await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
+
+@app.on_message(filters.command(["admins"]))
+async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    if message.chat.id in Admin_list or message.from_user.id in Admin_list :
+        lol = "List Of Admin ID's\n"
+        for i in Admin_list:
+            lol += str(i) + "\n"
+        await app.send_message(message.chat.id, lol, reply_to_message_id=message.id, disable_web_page_preview=True)
+    else :
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
 
 # links
@@ -191,7 +214,7 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
-                        text="__Sorry, you are banned. Contact My Owner [ Rushidhar ](https://telegram.me/Rushidhar1999)__",
+                        text="__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{Owner_username})__",
                         disable_web_page_preview=True
                     )
                     return
@@ -212,7 +235,7 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
             except Exception:
                 await app.send_message(
                     chat_id=message.chat.id,
-                    text="<i>Something went wrong</i> <b> <a href='https://telegram.me/Rushidhar1999'>CLICK HERE FOR SUPPORT </a></b>",
+                    text="<i>Something went wrong</i> <b> <a href='https://telegram.me/{Owner_username}'>CLICK HERE FOR SUPPORT </a></b>",
 
                     disable_web_page_preview=True)
                 return
