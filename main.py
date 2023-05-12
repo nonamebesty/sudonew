@@ -147,7 +147,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
                 return
     await app.send_message(message.chat.id, HELP_TEXT, reply_to_message_id=message.id, disable_web_page_preview=True)
 
-@app.on_message(filters.command(["list"] and Owner and filters.private))
+@app.on_message(filters.command(["list"] and Owner_id and filters.private))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     lol = ""
     for i in group_id:
