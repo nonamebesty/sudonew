@@ -78,7 +78,7 @@ def loopthread(message):
 async def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
         return
-    if message.chat.id not in GROUP_ID:
+    elif message.chat.id not in GROUP_ID:
         if UPDATES_CHANNEL != "None":
             try:
                 user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
@@ -117,8 +117,9 @@ async def send_start(client: pyrogram.client.Client, message: pyrogram.types.mes
 # help command
 @app.on_message(filters.command(["help"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id not in GROUP_ID:
-        if UPDATES_CHANNEL != "None":
+    if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
+        return
+    elif message.chat.id not in GROUP_ID:
             try:
                 user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
                 if user.status == enums.ChatMemberStatus.BANNED:
@@ -290,7 +291,9 @@ def docthread(message):
 
 @app.on_message(filters.document)
 async def docfile(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id not in GROUP_ID:
+    if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
+        return
+    elif message.chat.id not in GROUP_ID:
         if UPDATES_CHANNEL != "None":
             try:
                 user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
