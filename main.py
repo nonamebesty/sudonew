@@ -176,7 +176,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
         if msg not in GROUP_ID:
             await app.send_message(message.chat.id, f"Already Removed", reply_to_message_id=message.id, disable_web_page_preview=True)
         else :
-            if msg == int(Permanent_group) :
+            if msg == int(PERMANENT_GROUP) :
                 await app.send_message(message.chat.id, f"Even Owner Can't Remove This {msg} Chat 😂😂", reply_to_message_id=message.id, disable_web_page_preview=True)
                 return
             GROUP_ID.remove(msg)
@@ -186,7 +186,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 
 @app.on_message(filters.command(["addsudo"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id in ADMIN_LIST or message.from_user.id in ADMIN_LIST :
+    if message.chat.id == OWNER_ID or message.from_user.id == OWNER_ID :
         try :
             msg = int(message.text.split()[-1])
         except ValueError:
@@ -202,7 +202,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
         
 @app.on_message(filters.command(["remsudo"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id in ADMIN_LIST or message.from_user.id in ADMIN_LIST :
+    if message.chat.id == OWNER_ID or message.from_user.id == OWNER_ID :
         try :
             msg = int(message.text.split()[-1])
         except ValueError:
