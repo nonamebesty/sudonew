@@ -186,7 +186,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 
 @app.on_message(filters.command(["addsudo"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id == OWNER_ID or message.from_user.id == OWNER_ID :
+    if message.chat.id == int(OWNER_ID) or message.from_user.id == int(OWNER_ID) :
         try :
             msg = int(message.text.split()[-1])
         except ValueError:
@@ -202,7 +202,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
         
 @app.on_message(filters.command(["remsudo"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id == OWNER_ID or message.from_user.id == OWNER_ID :
+    if message.chat.id == int(OWNER_ID) or message.from_user.id == int(OWNER_ID) :
         try :
             msg = int(message.text.split()[-1])
         except ValueError:
