@@ -11,7 +11,7 @@ a Telegram Bot that can Bypass Ad Links and Generate Direct Links. see the Bot i
 - `ID` API ID from my.telegram.org
 - `OWNER_ID` Owner's User ID
 - `OWNER_USERNAME` Username of Bot Owner Without "@"
-- `PERMANENT_GROUP` Telegram New Or Old Group ID, members of this group no need to join updates channel
+- `PERMANENT_GROUP` Telegram New Or Old Group ID starts with -100, members of this group no need to join updates channel
 
 ## Optional Variables
 
@@ -25,7 +25,7 @@ a Telegram Bot that can Bypass Ad Links and Generate Direct Links. see the Bot i
 - `TERA_COOKIE` Terabox Cookie (only `ndus` value) (see [Help](#help))
 - `UPDATES_CHANNEL` Updates channel username Without "@"
 - `ADMIN_LIST` User ID's of Bot Admins seperatend by space
-- `GROUP_ID` Telegram New Or Old Group ID's seperated by space, members of this group no need to join updates channel
+- `GROUP_ID` Telegram New Or Old Group ID's starts with -100 seperated by space, members of this group no need to join updates channel
 
 ---
 
