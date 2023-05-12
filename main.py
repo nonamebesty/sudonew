@@ -320,7 +320,7 @@ async def docfile(client: pyrogram.client.Client, message: pyrogram.types.messag
 
                     disable_web_page_preview=True)
                 return
-    if media.file_name.endswith(".dlc"):
+    if pyrogram.types.Document.file_name.endswith(".dlc"):
         bypass = threading.Thread(target=lambda:docthread(message),daemon=True)
         bypass.start()
 
