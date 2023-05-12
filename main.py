@@ -198,7 +198,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
             ADMIN_LIST.append(msg)
             await app.send_message(message.chat.id, f"Promoted As Admin Temporarily", reply_to_message_id=message.id, disable_web_page_preview=True)
     else:
-        await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
+        await app.send_message(message.chat.id, f"This Command Is Only For Owner", reply_to_message_id=message.id, disable_web_page_preview=True)
         
 @app.on_message(filters.command(["remsudo"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
@@ -220,7 +220,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
             ADMIN_LIST.remove(msg)
             await app.send_message(message.chat.id, f"Demoted!", reply_to_message_id=message.id, disable_web_page_preview=True)
     else:
-        await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
+        await app.send_message(message.chat.id, f"This Command Is Only For Owner", reply_to_message_id=message.id, disable_web_page_preview=True)
         
 @app.on_message(filters.command(["users"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
@@ -286,6 +286,43 @@ def docthread(message):
         app.edit_message_text(message.chat.id, msg.id, f'__{link}__')
         os.remove(file)
 
+@app.on_message(filters.document)
+def docfile(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    if message.chat.id not in GROUP_ID:
+        if UPDATES_CHANNEL != "None":
+            try:
+                user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
+                if user.status == enums.ChatMemberStatus.BANNED:
+                    await app.send_message(
+                        chat_id=message.chat.id,
+                        text=f"__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{OWNER_USERNAME})__",
+                        disable_web_page_preview=True
+                    )
+                    return
+            except UserNotParticipant:
+                 await app.send_message(
+                    chat_id=message.chat.id,
+                    text="<i>🔐 Join Channel To Use Me 🔐</i>",
+                    reply_markup=InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton("🔓 Join Now 🔓", url=f"https://t.me/{UPDATES_CHANNEL}")
+                            ]
+                        ]
+                    ),
+
+                )
+                 return
+            except Exception:
+                await app.send_message(
+                    chat_id=message.chat.id,
+                    text=f"<i>Something went wrong</i> <b> <a href='https://telegram.me/{OWNER_USERNAME}'>CLICK HERE FOR SUPPORT </a></b>",
+
+                    disable_web_page_preview=True)
+                return
+    if media.file_name.endswith(".dlc"):
+        bypass = threading.Thread(target=lambda:docthread(message),daemon=True)
+        bypass.start()
 
 # server loop
 print("Bot Starting")
