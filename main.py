@@ -211,7 +211,10 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
         if msg not in ADMIN_LIST:
             await app.send_message(message.chat.id, f"Already Demoted!", reply_to_message_id=message.id, disable_web_page_preview=True)
         else :
-            if msg == int(OWNER_ID) :
+            if msg == int(message.from_user.id) :
+                await app.send_message(message.chat.id, f"You Can't Remove Yourself 😂😂", reply_to_message_id=message.id, disable_web_page_preview=True)
+                return
+            elif msg == int(OWNER_ID) :
                 await app.send_message(message.chat.id, f"Even Owner Can't Remove Himself 😂😂", reply_to_message_id=message.id, disable_web_page_preview=True)
                 return
             ADMIN_LIST.remove(msg)
