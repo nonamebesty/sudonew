@@ -150,9 +150,9 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 @app.on_message(filters.command(["list"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if message.chat.id in Owner_id or message.from_user.id in Owner_id :
-        lol = "List Of Authorized Chats"
+        lol = "List Of Authorized Chats\n"
         for i in group_id:
-            lol += "\n" + str(i) + "\n"
+            lol += str(i) + "\n"
         await app.send_message(message.chat.id, lol, reply_to_message_id=message.id, disable_web_page_preview=True)
     else :
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
@@ -165,7 +165,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
             await app.send_message(message.chat.id, f"Already Removed", reply_to_message_id=message.id, disable_web_page_preview=True)
         else :
             group_id.remove(msg)
-            await app.send_message(message.chat.id, f"{msg} is Removed", reply_to_message_id=message.id, disable_web_page_preview=True)
+            await app.send_message(message.chat.id, f"{msg} is Removed Temporarily", reply_to_message_id=message.id, disable_web_page_preview=True)
     else:
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
 
@@ -177,7 +177,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
             await app.send_message(message.chat.id, f"Already Added", reply_to_message_id=message.id, disable_web_page_preview=True)
         else :
             group_id.append(msg)
-            await app.send_message(message.chat.id, f"{msg} is Added", reply_to_message_id=message.id, disable_web_page_preview=True)
+            await app.send_message(message.chat.id, f"{msg} is Added Temporarily", reply_to_message_id=message.id, disable_web_page_preview=True)
     else:
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
 
