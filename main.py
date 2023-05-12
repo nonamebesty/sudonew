@@ -76,6 +76,8 @@ def loopthread(message):
 # start command
 @app.on_message(filters.command(["start"]))
 async def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
+        return
     if message.chat.id not in GROUP_ID:
         if UPDATES_CHANNEL != "None":
             try:
