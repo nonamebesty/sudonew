@@ -18,7 +18,7 @@ bot_token = os.environ.get("TOKEN", "")
 api_hash = os.environ.get("HASH", "") 
 api_id = os.environ.get("ID", "")
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
-group_id = [int(ch) for ch in (environ.get("group_id", "-1001544172274")).split()]
+group_id = [int(ch) for ch in (os.environ.get("group_id", "-1001544172274")).split()]
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
 
 
