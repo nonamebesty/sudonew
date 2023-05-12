@@ -18,7 +18,7 @@ bot_token = os.environ.get("TOKEN", "")
 api_hash = os.environ.get("HASH", "") 
 api_id = os.environ.get("ID", "")
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
-group_id = os.environ.get("group_id", "-1001544172274 5175000602")
+group_id = [int(ch) for ch in (environ.get("group_id", "-1001544172274")).split()]
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
 
 
@@ -73,37 +73,38 @@ def loopthread(message):
 # start command
 @app.on_message(filters.command(["start"]))
 async def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if UPDATES_CHANNEL != "None":
-        try:
-            user = await app.get_chat_member(UPDATES_CHANNEL, message.reply_to_message.from_user.id)
-            if user.status == enums.ChatMemberStatus.BANNED:
+    if message.chat.id not in group_id:
+        if UPDATES_CHANNEL != "None":
+            try:
+                user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
+                if user.status == enums.ChatMemberStatus.BANNED:
+                    await app.send_message(
+                        chat_id=message.chat.id,
+                        text="__Sorry, you are banned. Contact My Owner [ Rushidhar ](https://telegram.me/Rushidhar1999)__",
+                        disable_web_page_preview=True
+                    )
+                    return
+            except UserNotParticipant:
+                 await app.send_message(
+                    chat_id=message.chat.id,
+                    text="<i>🔐 Join Channel To Use Me 🔐</i>",
+                    reply_markup=InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton("🔓 Join Now 🔓", url=f"https://t.me/{UPDATES_CHANNEL}")
+                            ]
+                        ]
+                    ),
+
+                )
+                 return
+            except Exception:
                 await app.send_message(
                     chat_id=message.chat.id,
-                    text="__Sorry, you are banned. Contact My Owner [ Rushidhar ](https://telegram.me/Rushidhar1999)__",
-                    disable_web_page_preview=True
-                )
-                return
-        except UserNotParticipant:
-             await app.send_message(
-                chat_id=message.chat.id,
-                text="<i>🔐 Join Channel To Use Me 🔐</i>",
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton("🔓 Join Now 🔓", url=f"https://t.me/{UPDATES_CHANNEL}")
-                        ]
-                    ]
-                ),
-                
-            )
-             return
-        except Exception:
-            await app.send_message(
-                chat_id=message.chat.id,
-                text="<i>Something went wrong</i> <b> <a href='https://telegram.me/Rushidhar1999'>CLICK HERE FOR SUPPORT </a></b>",
+                    text="<i>Something went wrong</i> <b> <a href='https://telegram.me/Rushidhar1999'>CLICK HERE FOR SUPPORT </a></b>",
 
-                disable_web_page_preview=True)
-            return
+                    disable_web_page_preview=True)
+                return
     await app.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, i am Link Bypasser Bot, just send me any supported links and i will you get you results.\nCheckout /help to Read More__",
                            reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("❤️ Owner ❤️", url="https://telegram.me/Rushidhar1999")]]), reply_to_message_id=message.id)
 
