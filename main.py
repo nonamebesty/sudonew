@@ -147,38 +147,34 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
                     disable_web_page_preview=True)
                 return
     await app.send_message(message.chat.id, HELP_TEXT, reply_to_message_id=message.id, disable_web_page_preview=True)
-
-@app.on_message(filters.command(["list"]))
-async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id in Admin_list or message.from_user.id in Admin_list :
-        lol = "List Of Authorized Chats\n"
-        for i in group_id:
-            lol += str(i) + "\n"
-        await app.send_message(message.chat.id, lol, reply_to_message_id=message.id, disable_web_page_preview=True)
-    else :
-        await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
         
-@app.on_message(filters.command(["rem"]))
+@app.on_message(filters.command(["unauthorize"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if message.chat.id in Admin_list or message.from_user.id in Admin_list :
         msg = int(message.text.split()[-1])
-        if msg not in group_id:
-            await app.send_message(message.chat.id, f"Already Removed", reply_to_message_id=message.id, disable_web_page_preview=True)
-        else :
-            group_id.remove(msg)
-            await app.send_message(message.chat.id, f"{msg} is Removed Temporarily", reply_to_message_id=message.id, disable_web_page_preview=True)
+        try:
+            if msg not in group_id:
+                await app.send_message(message.chat.id, f"Already Removed", reply_to_message_id=message.id, disable_web_page_preview=True)
+            else :
+                group_id.remove(msg)
+                await app.send_message(message.chat.id, f"Unauthorized!", reply_to_message_id=message.id, disable_web_page_preview=True)
+        except ValueError:
+            await app.send_message(message.chat.id, f"Example\n<code>/unauthorize -100</code>", reply_to_message_id=message.id, disable_web_page_preview=True)
     else:
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
 
-@app.on_message(filters.command(["add"]))
+@app.on_message(filters.command(["authorize"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if message.chat.id in Admin_list or message.from_user.id in Admin_list :
         msg = int(message.text.split()[-1])
-        if msg in group_id:
-            await app.send_message(message.chat.id, f"Already Added", reply_to_message_id=message.id, disable_web_page_preview=True)
-        else :
-            group_id.append(msg)
-            await app.send_message(message.chat.id, f"{msg} is Added Temporarily", reply_to_message_id=message.id, disable_web_page_preview=True)
+        try:
+            if msg in group_id:
+                await app.send_message(message.chat.id, f"Already Added", reply_to_message_id=message.id, disable_web_page_preview=True)
+            else :
+                group_id.append(msg)
+                await app.send_message(message.chat.id, f"Authorized Temporarily!", reply_to_message_id=message.id, disable_web_page_preview=True)
+        except ValueError:
+            await app.send_message(message.chat.id, f"Example\n<code>/authorize -100</code>", reply_to_message_id=message.id, disable_web_page_preview=True)
     else:
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
 
@@ -186,20 +182,26 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if message.chat.id in Admin_list or message.from_user.id in Admin_list :
         msg = int(message.text.split()[-1])
-        if msg in Admin_list:
-            await app.send_message(message.chat.id, f"Already Admin", reply_to_message_id=message.id, disable_web_page_preview=True)
-        else :
-            group_id.append(msg)
-            await app.send_message(message.chat.id, f"Promoted As Admin Temporarily", reply_to_message_id=message.id, disable_web_page_preview=True)
+        try:
+            if msg in Admin_list:
+                await app.send_message(message.chat.id, f"Already Admin", reply_to_message_id=message.id, disable_web_page_preview=True)
+            else :
+                Admin_list.append(msg)
+                await app.send_message(message.chat.id, f"Promoted As Admin Temporarily", reply_to_message_id=message.id, disable_web_page_preview=True)
+        except ValueError:
+            await app.send_message(message.chat.id, f"Example\n<code>/addsudo 123</code>", reply_to_message_id=message.id, disable_web_page_preview=True)
     else:
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
-
-@app.on_message(filters.command(["admin"]))
+        
+@app.on_message(filters.command(["users"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if message.chat.id in Admin_list or message.from_user.id in Admin_list :
-        lol = "List Of Admin ID's\n"
+        lol = "List Of Authorized Chats\n\n"
+        for i in group_id:
+            lol += "<code> + "str(i) + "</code>\n"
+        lol += "\n\nList Of Admin ID's\n\n"
         for i in Admin_list:
-            lol += str(i) + "\n"
+            lol += "<code> + "str(i) + "</code>\n"
         await app.send_message(message.chat.id, lol, reply_to_message_id=message.id, disable_web_page_preview=True)
     else :
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
