@@ -156,7 +156,31 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
         await app.send_message(message.chat.id, lol, reply_to_message_id=message.id, disable_web_page_preview=True)
     else :
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
-    
+        
+@app.on_message(filters.command(["rem"]))
+async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    if message.chat.id in Owner_id :
+        msg = int(message.text.split()[-1])
+        if msg in group_id:
+            await app.send_message(message.chat.id, f"Already Removed", reply_to_message_id=message.id, disable_web_page_preview=True)
+        else :
+            group_id.remove(msg)
+            await app.send_message(message.chat.id, f"{msg} is Removed", reply_to_message_id=message.id, disable_web_page_preview=True)
+    else:
+        await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
+
+@app.on_message(filters.command(["add"]))
+async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    if message.chat.id in Owner_id :
+        msg = int(message.text.split()[-1])
+        if msg in group_id:
+            await app.send_message(message.chat.id, f"Already Added", reply_to_message_id=message.id, disable_web_page_preview=True)
+        else :
+            group_id.append(msg)
+            await app.send_message(message.chat.id, f"{msg} is Added", reply_to_message_id=message.id, disable_web_page_preview=True)
+    else:
+        await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
+
 # links
 @app.on_message(filters.text)
 async def receive(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
