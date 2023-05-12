@@ -17,11 +17,11 @@ import re
 bot_token = os.environ.get("TOKEN", "")
 api_hash = os.environ.get("HASH", "") 
 api_id = os.environ.get("ID", "")
-Owner_id = os.environ.get("Owner_id", "5175000602")
-Admin_list = [int(ch) for ch in (os.environ.get("Admin_list", f"{Owner_id}")).split()]
-Owner_username = os.environ.get("Owner_username", "Rushidhar1999")
-Permanent_group = os.environ.get("Permanent_group", "-1001776558320")
-group_id = [int(ch) for ch in (os.environ.get("group_id", f"{Permanent_group}")).split()]
+OWNER_ID = os.environ.get("OWNER_ID", "5175000602")
+ADMIN_LIST = [int(ch) for ch in (os.environ.get("ADMIN_LIST", f"{OWNER_ID}")).split()]
+OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "Rushidhar1999")
+PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1001776558320")
+GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
 
@@ -76,14 +76,14 @@ def loopthread(message):
 # start command
 @app.on_message(filters.command(["start"]))
 async def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id not in group_id:
+    if message.chat.id not in GROUP_ID:
         if UPDATES_CHANNEL != "None":
             try:
                 user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
-                        text=f"__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{Owner_username})__",
+                        text=f"__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{OWNER_USERNAME})__",
                         disable_web_page_preview=True
                     )
                     return
@@ -104,25 +104,25 @@ async def send_start(client: pyrogram.client.Client, message: pyrogram.types.mes
             except Exception:
                 await app.send_message(
                     chat_id=message.chat.id,
-                    text=f"<i>Something went wrong</i> <b> <a href='https://telegram.me/{Owner_username}'>CLICK HERE FOR SUPPORT </a></b>",
+                    text=f"<i>Something went wrong</i> <b> <a href='https://telegram.me/{OWNER_USERNAME}'>CLICK HERE FOR SUPPORT </a></b>",
 
                     disable_web_page_preview=True)
                 return
     await app.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, i am Link Bypasser Bot, just send me any supported links and i will you get you results.\nCheckout /help to Read More__",
-                           reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("❤️ Owner ❤️", url=f"https://telegram.me/{Owner_username}")]]), reply_to_message_id=message.id)
+                           reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("❤️ Owner ❤️", url=f"https://telegram.me/{OWNER_USERNAME}")]]), reply_to_message_id=message.id)
 
 
 # help command
 @app.on_message(filters.command(["help"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id not in group_id:
+    if message.chat.id not in GROUP_ID:
         if UPDATES_CHANNEL != "None":
             try:
                 user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
-                        text=f"__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{Owner_username})__",
+                        text=f"__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{OWNER_USERNAME})__",
                         disable_web_page_preview=True
                     )
                     return
@@ -143,7 +143,7 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
             except Exception:
                 await app.send_message(
                     chat_id=message.chat.id,
-                    text=f"<i>Something went wrong</i> <b> <a href='https://telegram.me/{Owner_username}'>CLICK HERE FOR SUPPORT </a></b>",
+                    text=f"<i>Something went wrong</i> <b> <a href='https://telegram.me/{OWNER_USERNAME}'>CLICK HERE FOR SUPPORT </a></b>",
 
                     disable_web_page_preview=True)
                 return
@@ -151,82 +151,82 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 
 @app.on_message(filters.command(["authorize"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id in Admin_list or message.from_user.id in Admin_list :
+    if message.chat.id in ADMIN_LIST or message.from_user.id in ADMIN_LIST :
         try :
             msg = int(message.text.split()[-1])
         except ValueError:
             await app.send_message(message.chat.id, f"Example\n<code>/authorize -100</code>", reply_to_message_id=message.id, disable_web_page_preview=True)
             return
-        if msg in group_id:
+        if msg in GROUP_ID:
             await app.send_message(message.chat.id, f"Already Added", reply_to_message_id=message.id, disable_web_page_preview=True)
         else :
-            group_id.append(msg)
+            GROUP_ID.append(msg)
             await app.send_message(message.chat.id, f"Authorized Temporarily!", reply_to_message_id=message.id, disable_web_page_preview=True)
     else:
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
 
 @app.on_message(filters.command(["unauthorize"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id in Admin_list or message.from_user.id in Admin_list :
+    if message.chat.id in ADMIN_LIST or message.from_user.id in ADMIN_LIST :
         try :
             msg = int(message.text.split()[-1])
         except ValueError:
             await app.send_message(message.chat.id, f"Example\n<code>/unauthorize -100</code>", reply_to_message_id=message.id, disable_web_page_preview=True)
             return
-        if msg not in group_id:
+        if msg not in GROUP_ID:
             await app.send_message(message.chat.id, f"Already Removed", reply_to_message_id=message.id, disable_web_page_preview=True)
         else :
             if msg == int(Permanent_group) :
                 await app.send_message(message.chat.id, f"Even Owner Can't Remove This {msg} Chat 😂😂", reply_to_message_id=message.id, disable_web_page_preview=True)
                 return
-            group_id.remove(msg)
+            GROUP_ID.remove(msg)
             await app.send_message(message.chat.id, f"Unauthorized!", reply_to_message_id=message.id, disable_web_page_preview=True)
     else:
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
 
 @app.on_message(filters.command(["addsudo"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id in Admin_list or message.from_user.id in Admin_list :
+    if message.chat.id in ADMIN_LIST or message.from_user.id in ADMIN_LIST :
         try :
             msg = int(message.text.split()[-1])
         except ValueError:
             await app.send_message(message.chat.id, f"Example\n<code>/addsudo 123</code>", reply_to_message_id=message.id, disable_web_page_preview=True)
             return
-        if msg in Admin_list:
+        if msg in ADMIN_LIST:
             await app.send_message(message.chat.id, f"Already Admin", reply_to_message_id=message.id, disable_web_page_preview=True)
         else :
-            Admin_list.append(msg)
+            ADMIN_LIST.append(msg)
             await app.send_message(message.chat.id, f"Promoted As Admin Temporarily", reply_to_message_id=message.id, disable_web_page_preview=True)
     else:
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
         
 @app.on_message(filters.command(["remsudo"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id in Admin_list or message.from_user.id in Admin_list :
+    if message.chat.id in ADMIN_LIST or message.from_user.id in ADMIN_LIST :
         try :
             msg = int(message.text.split()[-1])
         except ValueError:
             await app.send_message(message.chat.id, f"Example\n<code>/remsudo 123</code>", reply_to_message_id=message.id, disable_web_page_preview=True)
             return
-        if msg not in Admin_list:
+        if msg not in ADMIN_LIST:
             await app.send_message(message.chat.id, f"Already Demoted!", reply_to_message_id=message.id, disable_web_page_preview=True)
         else :
-            if msg == int(Owner_id) :
+            if msg == int(OWNER_ID) :
                 await app.send_message(message.chat.id, f"Even Owner Can't Remove Himself 😂😂", reply_to_message_id=message.id, disable_web_page_preview=True)
                 return
-            Admin_list.remove(msg)
+            ADMIN_LIST.remove(msg)
             await app.send_message(message.chat.id, f"Demoted!", reply_to_message_id=message.id, disable_web_page_preview=True)
     else:
         await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
         
 @app.on_message(filters.command(["users"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id in Admin_list or message.from_user.id in Admin_list :
+    if message.chat.id in ADMIN_LIST or message.from_user.id in ADMIN_LIST :
         lol = "List Of Authorized Chats\n\n"
-        for i in group_id:
+        for i in GROUP_ID:
             lol += "<code>" + str(i) + "</code>\n"
         lol += "\nList Of Admin ID's\n\n"
-        for i in Admin_list:
+        for i in ADMIN_LIST:
             lol += "<code>" + str(i) + "</code>\n"
         await app.send_message(message.chat.id, lol, reply_to_message_id=message.id, disable_web_page_preview=True)
     else :
@@ -235,14 +235,14 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 # links
 @app.on_message(filters.text)
 async def receive(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id not in group_id:
+    if message.chat.id not in GROUP_ID:
         if UPDATES_CHANNEL != "None":
             try:
                 user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
-                        text=f"__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{Owner_username})__",
+                        text=f"__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{OWNER_USERNAME})__",
                         disable_web_page_preview=True
                     )
                     return
@@ -263,7 +263,7 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
             except Exception:
                 await app.send_message(
                     chat_id=message.chat.id,
-                    text=f"<i>Something went wrong</i> <b> <a href='https://telegram.me/{Owner_username}'>CLICK HERE FOR SUPPORT </a></b>",
+                    text=f"<i>Something went wrong</i> <b> <a href='https://telegram.me/{OWNER_USERNAME}'>CLICK HERE FOR SUPPORT </a></b>",
 
                     disable_web_page_preview=True)
                 return
