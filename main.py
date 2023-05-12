@@ -17,7 +17,7 @@ import re
 bot_token = os.environ.get("TOKEN", "")
 api_hash = os.environ.get("HASH", "") 
 api_id = os.environ.get("ID", "")
-Owner_id = os.environ.get("Owner_id", "5175000602")
+Owner_id = [int(ch) for ch in (os.environ.get("Owner_id", "5175000602")).split()]
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
 group_id = [int(ch) for ch in (os.environ.get("group_id", "-1001544172274 -1001776558320")).split()]
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
@@ -147,12 +147,15 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
                 return
     await app.send_message(message.chat.id, HELP_TEXT, reply_to_message_id=message.id, disable_web_page_preview=True)
 
-@app.on_message(filters.command(["list"] and (message.chat.id in int(Owner_id))))
+@app.on_message(filters.command(["list"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    lol = ""
-    for i in group_id:
-        lol += str(i) + " "
-    await app.send_message(message.chat.id, lol, reply_to_message_id=message.id, disable_web_page_preview=True)
+    if message.chat.id in Owner_id :
+        lol = ""
+        for i in group_id:
+            lol += str(i) + "\n"
+        await app.send_message(message.chat.id, lol, reply_to_message_id=message.id, disable_web_page_preview=True)
+    else :
+        await app.send_message(message.chat.id, f"This Command Is Only For Admins", reply_to_message_id=message.id, disable_web_page_preview=True)
     
 # links
 @app.on_message(filters.text)
