@@ -241,7 +241,9 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 # links
 @app.on_message(filters.text)
 async def receive(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    if message.chat.id not in GROUP_ID:
+    if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
+        return
+    elif message.chat.id not in GROUP_ID:
         if UPDATES_CHANNEL != "None":
             try:
                 user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
