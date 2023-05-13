@@ -280,15 +280,13 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
         bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
         bypass.start()
     else :
-        shit = message.text
+        shit = message
         if shit.startswith("/by ") and len(shit)>4:
             duck = shit.split()[-1]
             bypass = threading.Thread(target=lambda:loopthread(duck),daemon=True)
             bypass.start()
         elif shit == "/by":
-            duck = message.reply_to_message.text
-            bypass = threading.Thread(target=lambda:loopthread(duck),daemon=True)
-            bypass.start()
+            await app.send_message(message.chat.id, f"Example\n<code>/by link..</code>", reply_to_message_id=message.id, disable_web_page_preview=True)
 
 # doc thread
 def docthread(message):
