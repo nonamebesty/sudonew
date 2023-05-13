@@ -23,7 +23,6 @@ OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "Rushidhar1999")
 PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1001776558320")
 GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
-DIRECT_BYPASS = os.environ.get("DIRECT_BYPASS", "False")
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
 
 # handle ineex
@@ -276,17 +275,9 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
 
                     disable_web_page_preview=True)
                 return
-    if (DIRECT_BYPASS == "True" and str(message.chat.id).startswith("-100")) or not str(message.chat.id).startswith("-100") :
-        bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
-        bypass.start()
-    else :
-        shit = message
-        if shit.startswith("/by ") and len(shit)>4:
-            duck = shit.split()[-1]
-            bypass = threading.Thread(target=lambda:loopthread(duck),daemon=True)
-            bypass.start()
-        elif shit == "/by":
-            await app.send_message(message.chat.id, f"Example\n<code>/by link..</code>", reply_to_message_id=message.id, disable_web_page_preview=True)
+    bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
+    bypass.start()
+
 
 # doc thread
 def docthread(message):
