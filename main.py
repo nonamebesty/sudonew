@@ -23,6 +23,7 @@ OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "Rushidhar1999")
 PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1001776558320")
 GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
+DIRECT_BYPASS = os.environ.get("DIRECT_BYPASS", "False")
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
 
 # handle ineex
@@ -275,10 +276,53 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
 
                     disable_web_page_preview=True)
                 return
-    bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
-    bypass.start()
+    if DIRECT_BYPASS == "True" or not str(message.chat.id).startswith("-100") :
+        bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
+        bypass.start()
+        
+@app.on_message(filters.command(["by"]))
+async def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
+        return
+    elif message.chat.id not in GROUP_ID:
+        if UPDATES_CHANNEL != "None":
+            try:
+                user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
+                if user.status == enums.ChatMemberStatus.BANNED:
+                    await app.send_message(
+                        chat_id=message.chat.id,
+                        text=f"__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{OWNER_USERNAME})__",
+                        disable_web_page_preview=True
+                    )
+                    return
+            except UserNotParticipant:
+                 await app.send_message(
+                    chat_id=message.chat.id,
+                    text="<i>🔐 Join Channel To Use Me 🔐</i>",
+                    reply_markup=InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton("🔓 Join Now 🔓", url=f"https://t.me/{UPDATES_CHANNEL}")
+                            ]
+                        ]
+                    ),
 
+                )
+                 return
+            except Exception:
+                await app.send_message(
+                    chat_id=message.chat.id,
+                    text=f"<i>Something went wrong</i> <b> <a href='https://telegram.me/{OWNER_USERNAME}'>CLICK HERE FOR SUPPORT </a></b>",
 
+                    disable_web_page_preview=True)
+                return
+    if DIRECT_BYPASS == "False" and str(message.chat.id).startswith("-100") :
+        shit = message.text
+        if shit.startswith("/by ") and len(shit)>4:
+            duck = shit.split()[-1]
+            bypass = threading.Thread(target=lambda:loopthread(duck),daemon=True)
+            bypass.start()
+        
 # doc thread
 def docthread(message):
     if message.document.file_name.endswith("dlc"):
