@@ -276,7 +276,7 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
 
                     disable_web_page_preview=True)
                 return
-    if DIRECT_BYPASS == "True" or not str(message.chat.id).startswith("-100")
+    if DIRECT_BYPASS == "True" or not str(message.chat.id).startswith("-100") :
         bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
         bypass.start()
         
