@@ -317,8 +317,10 @@ async def send_start(client: pyrogram.client.Client, message: pyrogram.types.mes
                     disable_web_page_preview=True)
                 return
     if DIRECT_BYPASS == "False" and str(message.chat.id).startswith("-100") :
+        print("ok")
         shit = message.text
         if shit.startswith("/by ") and len(shit)>4:
+            print("okok")
             duck = pyrogram.types.messages_and_media.message.Message(shit.split()[-1])
             bypass = threading.Thread(target=lambda:loopthread(duck),daemon=True)
             bypass.start()
