@@ -23,7 +23,7 @@ OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "Rushidhar1999")
 PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1001776558320")
 GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
-DIRECT_BYPASS = os.environ.get("DIRECT_BYPASS", "False")
+DIRECT_BYPASS = str(os.environ.get("DIRECT_BYPASS", "False"))
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
 
 # handle ineex
