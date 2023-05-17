@@ -1158,7 +1158,7 @@ def short2url(url):
     url = url[:-1] if url[-1] == '/' else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://blog.coin2pay.xyz/"
+    ref = "https://coin2pay.xyz/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
@@ -2179,7 +2179,7 @@ def shortners(url):
         return flashl(url)
 
     # short2url
-    elif "https://short2url.in/" in url:
+    elif "https://link.short2url.in/" in url:
         print("entered short2url:",url)
         return short2url(url)
         
