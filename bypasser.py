@@ -1,5 +1,5 @@
 import re
-from re import match as rematch, findall, sub as resub
+from re import match as rematch, findall, sub as resub, compile as recompile
 import requests
 from requests import get as rget
 import base64
@@ -40,6 +40,10 @@ otherslist = ["exe.io","exey.io","sub2unlock.net","sub2unlock.com","rekonise.com
 
 gdlist = ["appdrive","driveapp","drivehub","gdflix","drivesharer","drivebit","drivelinks","driveace",
 "drivepro","driveseed"]
+
+DDL_REGEX = recompile(r"DDL\(([^),]+)\, (([^),]+)), (([^),]+)), (([^),]+))\)")
+
+POST_ID_REGEX =  recompile(r'"postId":"(\d+)"')
 
 
 ###############################################################
@@ -286,31 +290,20 @@ def psa_bypasser(psa_url):
 # rocklinks
 
 def rocklinks(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    if 'rocklinks.net' in url:
-        DOMAIN = "https://blog.disheye.com"
-    else:
-        DOMAIN = "https://rocklinks.net"
-
+    client = cloudscraper.create_scraper(allow_brotli=False)   
+    DOMAIN = "https://rl.techysuccess.com"
     url = url[:-1] if url[-1] == '/' else url
-
-    code = url.split("/")[-1]
-    if 'rocklinks.net' in url:
-        final_url = f"{DOMAIN}/{code}?quelle=" 
-    else:
-        final_url = f"{DOMAIN}/{code}"
-
-    resp = client.get(final_url)
-    soup = BeautifulSoup(resp.content, "html.parser")
-    
+    code = url.split("/")[-1]        
+    final_url = f"{DOMAIN}/{code}"    
+    ref = "https://disheye.com/"    
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")        
     try: inputs = soup.find(id="go-link").find_all(name="input")
-    except: return "Incorrect Link"
-    
+    except: return "Incorrect Link"    
     data = { input.get('name'): input.get('value') for input in inputs }
-
-    h = { "x-requested-with": "XMLHttpRequest" }
-    
-    time.sleep(10)
+    h = { "x-requested-with": "XMLHttpRequest" }    
+    sleep(10)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
         return r.json()['url']
@@ -437,7 +430,7 @@ def htpmovies(link):
 
 def scrappers(link):
  
-    try: link = rematch(r"((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*", link)[0]
+    try: link = rematch(r"^(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))", link)[0]
     except TypeError: return 'Not a Valid Link.'
     links = []
 
@@ -451,12 +444,20 @@ def scrappers(link):
                 continue
             next2_s = next_s.nextSibling
             if next2_s and isinstance(next2_s,Tag) and next2_s.name == 'br':
-              text = str(next_s).strip()
-              if text:
-                  result = resub(r'(?m)^\(https://i.*', '', next_s)
-                  star = resub(r'(?m)^\*.*', ' ', result)
-                  extra = resub(r'(?m)^\(https://e.*', ' ', star)
-                  gd_txt += ', '.join(findall(r'(?m)^.*https://new1.gdtot.cfd/file/[0-9][^.]*', next_s)) + "\n\n"
+              if str(next_s).strip():
+                 List = next_s.split()
+                 if rematch(r'^(480p|720p|1080p)(.+)? Links:\Z', next_s):
+                    gd_txt += f'<b>{next_s.replace("Links:", "GDToT Links :")}</b>\n\n'
+                 for s in List:
+                      ns = resub(r'\(|\)', '', s)
+                      if rematch(r'https?://.+\.gdtot\.\S+', ns):
+                         r = rget(ns)
+                         soup = BeautifulSoup(r.content, "html.parser")
+                         title = soup.select('meta[property^="og:description"]')
+                         gd_txt += f"<code>{(title[0]['content']).replace('Download ' , '')}</code>\n{ns}\n\n"
+                      elif rematch(r'https?://pastetot\.\S+', ns):
+                         nxt = resub(r'\(|\)|(https?://pastetot\.\S+)', '', next_s)
+                         gd_txt += f"\n<code>{nxt}</code>\n{ns}\n"
         return gd_txt
   
     elif "htpmovies" in link and "/exit.php" in link:
@@ -489,15 +490,14 @@ def scrappers(link):
         links = []
         res = rget(link)
         soup = BeautifulSoup(res.text, 'html.parser')
-        x = soup.select('a[href^="https://kolop.icu/file"]')
+        x = soup.select('a[href^="https://filepress"]')
         for a in x:
             links.append(a['href'])
         for o in links:
             res = rget(o)
             soup = BeautifulSoup(res.content, "html.parser")
-            title = soup.title.string
-            reftxt = resub(r'Kolop \| ', '', title)
-            prsd += f'{reftxt}\n{o}\n\n'
+            title = soup.title
+            prsd += f'{title}\n{o}\n\n'
         return prsd
 
     elif "atishmkv" in link:
@@ -505,7 +505,7 @@ def scrappers(link):
         links = []
         res = rget(link)
         soup = BeautifulSoup(res.text, 'html.parser')
-        x = soup.select('a[href^="https://gdflix.top/file"]')
+        x = soup.select('a[href^="https://gdflix"]')
         for a in x:
             links.append(a['href'])
         for o in links:
@@ -544,19 +544,21 @@ def scrappers(link):
     
     elif "toonworld4all" in link:
         gd_txt, no = "", 0
-        r = rget(link)
-        soup = BeautifulSoup(r.text, "html.parser")
-        links = soup.select('a[href*="redirect/main.php?"]')
-        for a in links:
-            down = rget(a['href'], stream=True, allow_redirects=False)
-            link = down.headers["location"]
-            glink = rocklinks(link)
-            if glink and "gdtot" in glink:
-                t = rget(glink)
-                soupt = BeautifulSoup(t.text, "html.parser")
-                title = soupt.select('meta[property^="og:description"]')
-                no += 1
-                gd_txt += f"{no}. {(title[0]['content']).replace('Download ' , '')}\n{glink}\n\n"
+        client = requests.session()
+        r = client.get(link).text
+        soup = BeautifulSoup (r, "html.parser")
+        for a in soup.find_all("a"):
+                   c= a.get("href")
+                   if "redirect/main.php?" in c:
+                       download = rget(c, stream=True, allow_redirects=False)
+                       link = download.headers["location"]
+                       g = rock(link)
+                       if "gdtot" in g:
+                           t = client.get(g).text
+                           soupt = BeautifulSoup(t, "html.parser")
+                           title = soupt.title
+                           no += 1
+                           gd_txt += f"{(title.text).replace('GDToT | ' , '')}\n{g}\n\n"
         return gd_txt
     
     elif "animeremux" in link:
@@ -573,7 +575,74 @@ def scrappers(link):
             title = soupt.title
             no += 1
             gd_txt += f"{no}. {title.text}\n{x}\n\n"
-            asleep(1.5)
+            asleep(5)
+        return gd_txt
+    
+    elif "skymovieshd" in link:
+        gd_txt = ""
+        res = rget(link, allow_redirects=False)
+        soup = BeautifulSoup(res.text, 'html.parser')
+        a = soup.select('a[href^="https://howblogs.xyz"]')
+        t = soup.select('div[class^="Robiul"]')
+        gd_txt += f"<i>{t[-1].text.replace('Download ', '')}</i>\n\n"
+        gd_txt += f"<b>{a[0].text} :</b> \n"
+        nres = rget(a[0]['href'], allow_redirects=False)
+        nsoup = BeautifulSoup(nres.text, 'html.parser')
+        atag = nsoup.select('div[class="cotent-box"] > a[href]')
+        for no, link in enumerate(atag, start=1):
+            gd_txt += f"{no}. {link['href']}\n"
+        return gd_txt
+
+    elif "animekaizoku" in link:
+        global post_id
+        gd_txt = ""
+        try: website_html = rget(link).text
+        except: return "Please provide the correct episode link of animekaizoku"
+        try:
+            post_id = POST_ID_REGEX.search(website_html).group(0).split(":")[1].split('"')[1]
+            payload_data_matches = DDL_REGEX.finditer(website_html)
+        except: return "Something Went Wrong !!"
+
+        for match in payload_data_matches:
+            payload_data = match.group(0).split("DDL(")[1].replace(")", "").split(",")
+            payload = {
+               "action" : "DDL",
+               "post_id": post_id,
+               "div_id" : payload_data[0].strip(),
+               "tab_id" : payload_data[1].strip(),
+               "num"    : payload_data[2].strip(),
+               "folder" : payload_data[3].strip(),
+            }
+            del payload["num"]     
+            link_types = "DDL" if payload["tab_id"] == "2" else "WORKER" if payload["tab_id"] == "4" else "GDRIVE"
+            response = rpost("https://animekaizoku.com/wp-admin/admin-ajax.php",headers={"x-requested-with": "XMLHttpRequest", "referer": "https://animekaizoku.com"}, data=payload)
+            soup = BeautifulSoup(response.text, "html.parser")  
+            downloadbutton = soup.find_all(class_="downloadbutton")
+
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                for button in downloadbutton:
+                    if button.text == "Patches": pass
+                    else:
+                        dict_key = button.text.strip()
+                        data_dict[dict_key] = []
+                        executor.submit(looper, dict_key, str(button))
+            main_dict[link_types] = deepcopy(data_dict)
+            data_dict.clear()
+
+        to_edit = False
+        for key in main_dict:
+            gd_txt += f"----------------- <b>{key}</b> -----------------\n"
+            dict_data = main_dict[key]
+
+            if bool(dict_data) == 0:
+                gd_txt += "No Links Found\n"
+            else:
+                for y in dict_data:
+                    gd_txt += f"\n○ <b>{y}</b>\n"
+                    for no, i in enumerate(dict_data[y], start=1):
+                        try: gd_txt += f"➥ {no}. <i>{i[0]}</i> : {i[1]}\n"
+                        except: pass
+                    asleep(5)
         return gd_txt
 
     else:
