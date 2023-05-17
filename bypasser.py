@@ -1734,11 +1734,11 @@ def xpshort(url):
 #####################################################################################################
 # dulink
 
-def dulink(url):
+def vivdisk(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://du-link.in"
+    DOMAIN = "https://tinyfy.in"
     url = url[:-1] if url[-1] == '/' else url
-    ref = "https://profitshort.com/"
+    ref = "https://web.yotrickslog.tech/"
     h = {"referer": ref}
     resp = client.get(url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
@@ -2253,9 +2253,9 @@ def shortners(url):
         return xpshort(url)
 
     # dulink
-    elif "https://du-link.in/" in url:
-        print("entered dulink:",url)
-        return dulink(url)
+    elif "https://vivdisk.co.in/" in url:
+        print("entered vivdisk:",url)
+        return vivdisk(url)
 
     # ez4short
     elif "https://ez4short.com/" in url:
