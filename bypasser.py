@@ -214,9 +214,8 @@ def urlshorten(url):
     final_url = f"{DOMAIN}/{code}"
     ref = "https://lslink.in/"
     h = {"referer": ref}
-    while len(client.cookies) == 0:
-        resp = client.get(final_url,headers=h)
-        time.sleep(2)
+    resp = client.get(final_url,headers=h)
+    time.sleep(2)
     soup = BeautifulSoup(resp.content, "html.parser")
     inputs = soup.find_all("input")
     data = { input.get('name'): input.get('value') for input in inputs }
@@ -247,11 +246,10 @@ def try2link_bypass(url):
     bypassed_url = client.post('https://try2link.com/links/go', headers=headers,data=data)
     return bypassed_url.json()["url"]
 
-url = "https://pdisk.pro/xjy91c1v7er9"
-
 def pdisk(url):
    client = session()
    r = client.get(url).text
+   print(r)
    x = r.split("</center>")[-1]
    y = x.split("</script>")[1]
    z = y.split("-->")[0]
