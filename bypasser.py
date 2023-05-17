@@ -1793,13 +1793,13 @@ def adrinolink (url):
 #####################################################################################################
 # mdiskshortners
 
-def mdiskshortners(url):
+def mdiskshortner(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://mdiskshortners.in/"
+    DOMAIN = "https://mdiskshortner.link/"
     url = url[:-1] if url[-1] == '/' else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://www.adzz.in/"
+    ref = "https://m.proappapk.com/"
     h = {"referer": ref}
     resp = client.get(final_url,headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
@@ -2273,10 +2273,10 @@ def shortners(url):
         return adrinolink(url)
     
 
-    # mdiskshortners
-    elif "https://mdiskshortners.in/" in url:
-        print("entered mdiskshortners:",url)
-        return mdiskshortners(url)
+    # mdiskshortner
+    elif "https://mdiskshortner.link/" in url:
+        print("entered mdiskshortner:",url)
+        return mdiskshortner(url)
 
     # tinyfy
     elif "tinyfy.in" in url:
