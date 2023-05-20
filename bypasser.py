@@ -46,21 +46,14 @@ DDL_REGEX = recompile(r"DDL\(([^),]+)\, (([^),]+)), (([^),]+)), (([^),]+))\)")
 POST_ID_REGEX =  recompile(r'"postId":"(\d+)"')
 
 ###############################################################
-#pdisk
-
-url = "https://pdisk.pro/xjy91c1v7er9"
+# pdisk
 
 def pdisk(url):
-   client = session()
-   r = client.get(url).text
-   print(r)
-   x = r.split("</center>")[-1]
-   y = x.split("</script>")[1]
-   z = y.split("-->")[0]
-   p = z.split("<!-- ")[-1]
-   return p
-
-print(pdisk(url))
+    r = requests.get(url).text
+    try: return r.split("<!-- ")[-1].split(" -->")[0]
+    except:
+        try:return BeautifulSoup(r,"html.parser").find('video').find("source").get("src")
+        except: return None
 
 ###############################################################
 # index scrapper
