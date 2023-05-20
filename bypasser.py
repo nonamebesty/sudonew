@@ -48,13 +48,19 @@ POST_ID_REGEX =  recompile(r'"postId":"(\d+)"')
 ###############################################################
 #pdisk
 
-def pdisk(url):
-    r = get(url).text
-    try: return r.split("<!-- ")[-1].split(" -->")[0]
-    except:
-        try:return BeautifulSoup(r,"html.parser").find('video').find("source").get("src")
-        except: return None
+url = "https://pdisk.pro/xjy91c1v7er9"
 
+def pdisk(url):
+   client = session()
+   r = client.get(url).text
+   print(r)
+   x = r.split("</center>")[-1]
+   y = x.split("</script>")[1]
+   z = y.split("-->")[0]
+   p = z.split("<!-- ")[-1]
+   return p
+
+print(pdisk(url))
 
 ###############################################################
 # index scrapper
@@ -1728,47 +1734,6 @@ def xpshort(url):
     except: return "Something went wrong :("
 
 #####################################################################################################
-
-
-def technicalatg(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://files.technicalatg.com/"
-    url = url[:-1] if url[-1] == '/' else url
-    code = url.split("/")[-1]
-    final_url = f"{DOMAIN}/{code}"
-    ref = "https://mixrootmods.com/"
-    h = {"referer": ref}
-    resp = client.get(final_url,headers=h)
-    soup = BeautifulSoup(resp.content, "html.parser")
-    inputs = soup.find_all("input")
-    data = { input.get('name'): input.get('value') for input in inputs }
-    h = { "x-requested-with": "XMLHttpRequest" }
-    time.sleep(8)
-    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-    try: return r.json()['url']
-    except: return "Something went wrong :("
-    
-    
-def atglinks(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://atglinks.com/"
-    url = url[:-1] if url[-1] == '/' else url
-    code = url.split("/")[-1]
-    final_url = f"{DOMAIN}/{code}"
-    ref = "https://atglinks.com/"
-    h = {"referer": ref}
-    resp = client.get(final_url,headers=h)
-    soup = BeautifulSoup(resp.content, "html.parser")
-    inputs = soup.find_all("input")
-    data = { input.get('name'): input.get('value') for input in inputs }
-    h = { "x-requested-with": "XMLHttpRequest" }
-    time.sleep(8)
-    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-    try: return r.json()['url']
-    except: return "Something went wrong :("
-
-
-#####################################################################################################
 # dulink
 
 def vivdisk(url):
@@ -2348,14 +2313,6 @@ def shortners(url):
     elif "urlshorten.in" in url:
         print("entered urlshorten:",url)
         return urlshorten(url)
-    
-    elif "atglinks.com" in url:
-        print("entered atglinks:",url)
-        return atglinks(url)
-    
-    elif "files.technicalatg.com" in url:
-        print("entered files.technicalatg:",url)
-        return technicalatg(url)
     
     # omegalinks
     elif "mdisk.pro" in url:
