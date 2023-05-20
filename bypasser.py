@@ -45,6 +45,16 @@ DDL_REGEX = recompile(r"DDL\(([^),]+)\, (([^),]+)), (([^),]+)), (([^),]+))\)")
 
 POST_ID_REGEX =  recompile(r'"postId":"(\d+)"')
 
+###############################################################
+#pdisk
+
+def pdisk(url):
+    r = get(url).text
+    try: return r.split("<!-- ")[-1].split(" -->")[0]
+    except:
+        try:return BeautifulSoup(r,"html.parser").find('video').find("source").get("src")
+        except: return None
+
 
 ###############################################################
 # index scrapper
@@ -249,21 +259,6 @@ def try2link_bypass(url):
     
     bypassed_url = client.post('https://try2link.com/links/go', headers=headers,data=data)
     return bypassed_url.json()["url"]
-
-url = "https://pdisk.pro/xjy91c1v7er9"
-
-def pdisk(url):
-   client = session()
-   r = client.get(url).text
-   print(r)
-   x = r.split("</center>")[-1]
-   y = x.split("</script>")[1]
-   z = y.split("-->")[0]
-   p = z.split("<!-- ")[-1]
-   return p
-   
-print(pdisk(url))
-        
 
 def try2link_scrape(url):
     client = cloudscraper.create_scraper(allow_brotli=False)    
@@ -2388,7 +2383,7 @@ def shortners(url):
         return tamizhmasters(url)
 
     # pdisk
-    elif "pdisk.pro/" in url:
+    elif "pdisk.pro" in url:
         print("entered pdisk:",url)
         return pdisk(url)
 
