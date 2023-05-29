@@ -301,14 +301,17 @@ def docthread(message):
         app.edit_message_text(message.chat.id, msg.id, f'__{link}__')
         os.remove(file)
 
-@app.on_message(filters.document)
+@app.on_message(filters.private & (filters.document | filters.photo | filters.video))
 async def docfile(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
         return
-    elif message.chat.id not in GROUP_ID:
+    else:
         if UPDATES_CHANNEL != "None":
             try:
-                user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
+                if str(message.chat.id).startswith("-100"):
+                    user = await app.get_chat_member(UPDATES_CHANNEL, message.from_user.id)
+                else:
+                    user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
@@ -337,9 +340,16 @@ async def docfile(client: pyrogram.client.Client, message: pyrogram.types.messag
 
                     disable_web_page_preview=True)
                 return
-    if message.document.file_name.endswith(".dlc"):
-        bypass = threading.Thread(target=lambda:docthread(message),daemon=True)
-        bypass.start()
+    try:
+        if message.document.file_name.endswith("dlc"):
+            bypass = threading.Thread(target=lambda: docthread(message), daemon=True)
+            bypass.start()
+            return
+    except BaseException:
+        pass
+
+    bypass = threading.Thread(target=lambda: loopthread(message, True), daemon=True)
+    bypass.start()
 
 # server loop
 print("Bot Starting")
