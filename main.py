@@ -78,10 +78,13 @@ def loopthread(message):
 async def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
         return
-    elif message.chat.id not in GROUP_ID:
+    else:
         if UPDATES_CHANNEL != "None":
             try:
-                user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
+                if str(message.chat.id).startswith("-100"):
+                    user = await app.get_chat_member(UPDATES_CHANNEL, message.from_user.id)
+                else:
+                    user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
@@ -119,9 +122,13 @@ async def send_start(client: pyrogram.client.Client, message: pyrogram.types.mes
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
         return
-    elif message.chat.id not in GROUP_ID:
+    else:
+        if UPDATES_CHANNEL != "None":
             try:
-                user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
+                if str(message.chat.id).startswith("-100"):
+                    user = await app.get_chat_member(UPDATES_CHANNEL, message.from_user.id)
+                else:
+                    user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
@@ -243,10 +250,13 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 async def receive(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
         return
-    elif message.chat.id not in GROUP_ID:
+    else:
         if UPDATES_CHANNEL != "None":
             try:
-                user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
+                if str(message.chat.id).startswith("-100"):
+                    user = await app.get_chat_member(UPDATES_CHANNEL, message.from_user.id)
+                else:
+                    user = await app.get_chat_member(UPDATES_CHANNEL, message.chat.id)
                 if user.status == enums.ChatMemberStatus.BANNED:
                     await app.send_message(
                         chat_id=message.chat.id,
