@@ -46,6 +46,28 @@ DDL_REGEX = recompile(r"DDL\(([^),]+)\, (([^),]+)), (([^),]+)), (([^),]+))\)")
 POST_ID_REGEX =  recompile(r'"postId":"(\d+)"')
 
 ###############################################################
+# appdrive/pack
+
+def loldrive(url):
+    r = requests.get(url)
+    htmlContent = r.content
+    soup = BeautifulSoup(htmlContent, 'html.parser')
+    appdrive=soup.find_all("a")
+    all_links = set()
+    s=""
+    for i in appdrive:
+        if i.get('href') not in ["/","#",""] and "/file/" in i.get('href'):
+            if i.get('href').startswith("http"):
+                link = i.get('href')
+            else:
+                link = "https://appdrive.me"+i.get('href')
+            all_links.add(link)
+    for i in all_links:
+        s+=i+"\n"
+    s+="\n send this message again"
+    return s
+
+###############################################################
 # pdisk
 
 def pdisk(url):
@@ -2231,6 +2253,11 @@ def shortners(url):
     elif "https://ouo.press/" in url:
         print("entered ouo:",url)
         return ouo(url)
+
+    #appdrive/pack
+    elif "https://appdrive.me/pack/" in url:
+        print("entered appdrive/pack:",url)
+        return loldrive(url)
 
     # try2link
     elif "https://try2link.com/" in url:
