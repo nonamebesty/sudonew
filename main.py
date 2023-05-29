@@ -301,7 +301,7 @@ def docthread(message):
         app.edit_message_text(message.chat.id, msg.id, f'__{link}__')
         os.remove(file)
 
-@app.on_message(filters.private & (filters.document | filters.photo | filters.video))
+@app.on_message(filters.document | filters.photo | filters.video)
 async def docfile(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
         return
@@ -348,7 +348,7 @@ async def docfile(client: pyrogram.client.Client, message: pyrogram.types.messag
     except BaseException:
         pass
 
-    bypass = threading.Thread(target=lambda: loopthread(message, True), daemon=True)
+    bypass = threading.Thread(target=lambda: loopthread(message), daemon=True)
     bypass.start()
 
 # server loop
