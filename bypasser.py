@@ -1647,6 +1647,17 @@ def indshort(url):
         return "Something went wrong :("
 
 
+# atglinks
+
+
+def atglinks(url):
+    DOMAIN = "https://atglinks.com"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    return final_url
+
+
 ##########################################################################
 # helpers
 
@@ -1840,6 +1851,11 @@ def shortners(url):
     elif "indianshortner.in" in url:
         print("entered indianshortner:", url)
         return indshort(url)
+
+    # atglinks
+    elif "https://files.technicalatg.com/" in url:
+        print("entered atglinks:", url)
+        return atglinks(url)
 
     # linkvertise
     elif ispresent(linkvertise_list, url):
