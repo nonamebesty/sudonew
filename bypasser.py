@@ -285,16 +285,6 @@ def appdrivepack(url):
     return url
 
 
-###############################################################
-# pdisk
-
-def pdisk(url):
-    r = requests.get(url).text
-    try: return r.split("<!-- ")[-1].split(" -->")[0]
-    except:
-        try:return BeautifulSoup(r,"html.parser").find('video').find("source").get("src")
-        except: return None
-
 ################################################################
 
 
@@ -1801,11 +1791,6 @@ def shortners(url):
         print("entered ez4short:", url)
         return ez4(url)
 
-    # pdisk
-    elif "pdisk.pro" in url:
-        print("entered pdisk:",url)
-        return pdisk(url)
-    
     # krownlinks
     elif "https://krownlinks.me/" in url:
         print("entered krownlinks:", url)
