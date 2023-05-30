@@ -39,8 +39,11 @@ def loopthread(message,otherss=False):
 
     urls = []
     if otherss: texts = message.caption
-    else: texts = message.text
-
+    else:
+        try:
+            texts = message.text
+        except:
+            texts = message
     if texts in [None,""]: return
     for ele in texts.split():
         if "http://" in ele or "https://" in ele:
