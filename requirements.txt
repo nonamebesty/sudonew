@@ -1,5 +1,8 @@
 requests
 cloudscraper
+beautifulsoup4
+chromedriver_autoinstaller
+selenium==4.4.3
 bs4 
 python-dotenv
 pyrogram==2.0.66
@@ -7,6 +10,7 @@ tgcrypto
 lxml
 lk21
 cfscrape
+PyBypass
 urllib3==1.26
 Flask==2.2.2
 gunicorn==20.1.0
