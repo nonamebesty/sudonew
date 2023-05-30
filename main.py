@@ -24,6 +24,7 @@ PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1001811511054")
 GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
+DRIECT_BYPASS = [int(ch) for ch in (os.environ.get("GROUP_ID", f"")).split()]
 
 # handle ineex
 def handleIndex(ele,message,msg):
@@ -236,6 +237,39 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
     else:
         await app.send_message(message.chat.id, f"This Command Is Only For Owner", reply_to_message_id=message.id, disable_web_page_preview=True)
         
+@app.on_message(filters.command(["addd"]))
+async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    if message.chat.id == int(OWNER_ID) or message.from_user.id == int(OWNER_ID) :
+        try :
+            msg = int(message.text.split()[-1])
+        except ValueError:
+            await app.send_message(message.chat.id, f"Example\n<code>/addd -100</code>", reply_to_message_id=message.id, disable_web_page_preview=True)
+            return
+        if msg in DRIECT_BYPASS:
+            await app.send_message(message.chat.id, f"Already Direct Bypass", reply_to_message_id=message.id, disable_web_page_preview=True)
+        else :
+            DRIECT_BYPASS.append(msg)
+            await app.send_message(message.chat.id, f"Now You Can Direct Bypass Temporarily", reply_to_message_id=message.id, disable_web_page_preview=True)
+    else:
+        await app.send_message(message.chat.id, f"This Command Is Only For Owner", reply_to_message_id=message.id, disable_web_page_preview=True)
+        
+        
+@app.on_message(filters.command(["remd"]))
+async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    if message.chat.id == int(OWNER_ID) or message.from_user.id == int(OWNER_ID) :
+        try :
+            msg = int(message.text.split()[-1])
+        except ValueError:
+            await app.send_message(message.chat.id, f"Example\n<code>/remd -100</code>", reply_to_message_id=message.id, disable_web_page_preview=True)
+            return
+        if msg not in DRIECT_BYPASS:
+            await app.send_message(message.chat.id, f"Already Not A Direct Bypass", reply_to_message_id=message.id, disable_web_page_preview=True)
+        else :
+            DRIECT_BYPASS.remove(msg)
+            await app.send_message(message.chat.id, f"Removed From Direct Bypass Temporarily", reply_to_message_id=message.id, disable_web_page_preview=True)
+    else:
+        await app.send_message(message.chat.id, f"This Command Is Only For Owner", reply_to_message_id=message.id, disable_web_page_preview=True)
+        
 @app.on_message(filters.command(["users"]))
 async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if message.chat.id in ADMIN_LIST or message.from_user.id in ADMIN_LIST :
@@ -244,6 +278,9 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
             lol += "<code>" + str(i) + "</code>\n"
         lol += "\nList Of Admin ID's\n\n"
         for i in ADMIN_LIST:
+            lol += "<code>" + str(i) + "</code>\n"
+        lol += "\nDirect Bypass Chat ID's List\n\n"
+        for i in DRIECT_BYPASS:
             lol += "<code>" + str(i) + "</code>\n"
         await app.send_message(message.chat.id, lol, reply_to_message_id=message.id, disable_web_page_preview=True)
     else :
@@ -289,8 +326,20 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
 
                     disable_web_page_preview=True)
                 return
-    bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
-    bypass.start()
+    try:
+        loool = message.text
+        if not str(message.chat.id).startswith("-100") or (message.chat.id in DRIECT_BYPASS):
+            bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
+            bypass.start()
+        elif loool.startswith("/fuck") or loool.startswith("/fuck@"):
+            loool = loool[loool.find(" "):]
+            if len(loool) <=3:
+                loool = message.reply_to_message.text
+            bypass = threading.Thread(target=lambda:loopthread(loool),daemon=True)
+            bypass.start()
+    except:
+        bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
+        bypass.start()
 
 
 # doc thread
