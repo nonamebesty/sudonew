@@ -12,6 +12,7 @@ from cfscrape import create_scraper
 from lk21 import Bypass
 from lxml import etree
 from requests import get
+import requests
 
 from exceptions import DirectDownloadLinkException
 
