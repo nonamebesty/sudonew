@@ -325,20 +325,8 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
 
                     disable_web_page_preview=True)
                 return
-    try:
-        loool = message.text
-        if not str(message.chat.id).startswith("-100") or (message.chat.id in DRIECT_BYPASS):
-            bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
-            bypass.start()
-        elif loool.startswith("/fuck") or loool.startswith("/fuck@"):
-            loool = loool[loool.find(" "):]
-            if len(loool) <=3:
-                loool = message.reply_to_message.text
-            bypass = threading.Thread(target=lambda:loopthread(loool),daemon=True)
-            bypass.start()
-    except:
-        bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
-        bypass.start()
+    bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
+    bypass.start()
 
 
 # doc thread
