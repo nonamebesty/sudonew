@@ -1589,10 +1589,11 @@ def mdisk(url):
 # AppDrive or DriveApp etc. Look-Alike Link and as well as the Account Details (Required for Login Required Links only)
 
 def unified(url):
-
     if ddl.is_share_link(url):
-        if 'https://gdtot' in url: return ddl.gdtot(url)
-        else: return ddl.sharer_scraper(url)
+        if "https://gdtot" in url:
+            return ddl.gdtot(url)
+        else:
+            return ddl.sharer_scraper(url)
 
     try:
         Email = "chzeesha4@gmail.com"
