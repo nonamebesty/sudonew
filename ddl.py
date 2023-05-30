@@ -660,7 +660,7 @@ def filepress(url):
         return f"ERROR: {e.__class__.__name__}"
     if "data" not in res:
         return f'ERROR: {res["statusText"]}'
-    puchuk = f'https://drive.google.com/uc?id={res["data"]}&authuser=0'
+    puchuk = f'https://drive.google.com/open?id={res["data"]}&authuser=0'
     r = requests.get(puchuk)
     htmlContent = r.content
     soup = BeautifulSoup(htmlContent, 'html.parser')
