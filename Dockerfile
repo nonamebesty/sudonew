@@ -1,12 +1,13 @@
-FROM python:3.9
+FROM rushidhar/bypass:latest
 
-RUN apt update && apt upgrade -y
-RUN apt install git -y
-COPY requirements.txt /requirements.txt
+WORKDIR /usr/src/app
+SHELL ["/bin/bash", "-c"]
+RUN chmod 777 /usr/src/app
 
-RUN cd /
-RUN pip3 install -U pip && pip3 install -U -r requirements.txt
-RUN mkdir /Bypass-Bot
-WORKDIR /Bypass-Bot
-COPY start.sh /start.sh
-CMD ["/bin/bash", "/start.sh"]
+
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["python3", "main.py"]
