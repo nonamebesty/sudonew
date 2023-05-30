@@ -664,7 +664,7 @@ def filepress(url):
     htmlContent = r.content
     soup = BeautifulSoup(htmlContent, 'html.parser')
     ti=str(soup.find('title')).split(" - Google Drive</title>")[0].split("<title>")[1]
-    return f'{ti}\nhttps://drive.google.com/uc?id={res["data"]}&export=download'
+    return f'<code>{ti}</code>\nhttps://drive.google.com/uc?id={res["data"]}&export=download'
 
 
 def gdtot(url):
