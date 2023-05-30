@@ -48,24 +48,24 @@ POST_ID_REGEX =  recompile(r'"postId":"(\d+)"')
 ###############################################################
 # appdrive/pack
 
-def loldrive(url):
+def appdrivepack(url):
     r = requests.get(url)
     htmlContent = r.content
-    soup = BeautifulSoup(htmlContent, 'html.parser')
-    appdrive=soup.find_all("a")
+    soup = BeautifulSoup(htmlContent, "html.parser")
+    appdrive = soup.find_all("a")
     all_links = set()
-    s=""
     for i in appdrive:
-        if i.get('href') not in ["/","#",""] and "/file/" in i.get('href'):
-            if i.get('href').startswith("http"):
-                link = i.get('href')
+        if i.get("href") not in ["/", "#", ""] and "/file/" in i.get("href"):
+            if i.get("href").startswith("http"):
+                link = i.get("href")
             else:
-                link = "https://appdrive.me"+i.get('href')
+                link = "https://appdrive.me" + i.get("href")
             all_links.add(link)
-    for i in all_links:
-        s+=i+"\n"
-    s+="\n send this message again"
-    return s
+    url = ""
+    for l in all_links:
+        link = unified(l)
+        url += link + "\n\n"
+    return url
 
 ###############################################################
 # pdisk
@@ -2254,11 +2254,6 @@ def shortners(url):
         print("entered ouo:",url)
         return ouo(url)
 
-    #appdrive/pack
-    elif "https://appdrive.me/pack/" in url:
-        print("entered appdrive/pack:",url)
-        return loldrive(url)
-
     # try2link
     elif "https://try2link.com/" in url:
         print("entered try2links:",url)
@@ -2397,7 +2392,12 @@ def shortners(url):
         or "https://teluguflix" in url or 'https://taemovies' in url or "https://toonworld4all" in url or "https://animeremux" in url:
         print("entered htpmovies sharespark cinevood atishmkv:",url)
         return scrappers(url)
-
+    
+    # appdrive/pack
+    elif "https://appdrive.me/pack" in url:
+        print("entered appdrive pack:", url)
+        return appdrivepack(url)
+    
     # gdrive look alike
     elif ispresent(gdlist,url):
         print("entered gdrive look alike:",url)
