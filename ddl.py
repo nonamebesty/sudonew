@@ -659,7 +659,12 @@ def filepress(url):
         return f"ERROR: {e.__class__.__name__}"
     if "data" not in res:
         return f'ERROR: {res["statusText"]}'
-    return f'https://drive.google.com/uc?id={res["data"]}&export=download'
+    puchuk = f'https://drive.google.com/uc?id={res["data"]}&authuser=0'
+    r = requests.get(puchuk)
+    htmlContent = r.content
+    soup = BeautifulSoup(htmlContent, 'html.parser')
+    ti=str(soup.find('title')).split(" - Google Drive</title>")[0].split("<title>")[1]
+    return f'{ti}\nhttps://drive.google.com/uc?id={res["data"]}&export=download'
 
 
 def gdtot(url):
