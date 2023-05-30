@@ -11,6 +11,7 @@ import threading
 from texts import HELP_TEXT
 from ddl import ddllist
 import re
+from scraper import scrapper, scrapper_sites
 
 
 # bot
