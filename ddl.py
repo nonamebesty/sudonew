@@ -755,7 +755,7 @@ def sharer_scraper(url):
         raise DirectDownloadLinkException(
             "ERROR: Drive Link not found, Try in your broswer"
         )
-if "drive.google.com" in res["url"]:
+    if "drive.google.com" in res["url"]:
         puchuk = str(res["url"]).replace("uc?id=","open?id=").replace("&export=download","")+"&authuser=0"
         r = requests.get(puchuk)
         htmlContent = r.content
