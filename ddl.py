@@ -689,7 +689,12 @@ def gdtot(url):
         if (
             drive_link := findall(r"myDl\('(.*?)'\)", res.text)
         ) and "drive.google.com" in drive_link[0]:
-            return drive_link[0]
+            puchuk = str(drive_link[0]).replace("uc?id=","open?id=").replace("&export=download","")+"&authuser=0"
+            r = requests.get(puchuk)
+            htmlContent = r.content
+            soup = BeautifulSoup(htmlContent, 'html.parser')
+            ti=str(soup.find('title')).split(" - Google Drive</title>")[0].split("<title>")[1]
+            return ti+str(drive_link[0])
         else:
             raise DirectDownloadLinkException(
                 "ERROR: Drive Link not found, Try in your broswer"
@@ -758,8 +763,13 @@ def sharer_scraper(url):
         raise DirectDownloadLinkException(f"ERROR: {e.__class__.__name__}")
     if (
         drive_link := etree.HTML(res.content).xpath("//a[contains(@class,'btn')]/@href")
-    ) and "drive.google.com" in drive_link[0]:
-        return drive_link[0]
+        ) and "drive.google.com" in drive_link[0]:
+            puchuk = str(drive_link[0]).replace("uc?id=","open?id=").replace("&export=download","")+"&authuser=0"
+            r = requests.get(puchuk)
+            htmlContent = r.content
+            soup = BeautifulSoup(htmlContent, 'html.parser')
+            ti=str(soup.find('title')).split(" - Google Drive</title>")[0].split("<title>")[1]
+            return ti+str(drive_link[0])
     else:
         raise DirectDownloadLinkException(
             "ERROR: Drive Link not found, Try in your broswer"
