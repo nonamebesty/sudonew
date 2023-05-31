@@ -152,8 +152,8 @@ def unified(url):
             return ddl.sharer_scraper(url)
 
     try:
-        Email = "OPTIONAL"
-        Password = "OPTIONAL"
+        Email = "pinturoy54634@gmail.com"
+        Password = "iHH3FXPcLi5Bxci"
 
         account = {"email": Email, "passwd": Password}
         client = cloudscraper.create_scraper(allow_brotli=False)
@@ -257,6 +257,13 @@ def unified(url):
             info_parsed["gdrive_link"] = drive_link
         if info_parsed["error"]:
             return "Faced an Unknown Error!"
+        if "https://drive.google.com/" in str(info_parsed["gdrive_link"]):
+            puchuk = str(info_parsed["gdrive_link"]).replace("uc?id=","open?id=").replace("&export=download","")+"&authuser=0"
+            r = requests.get(puchuk)
+            htmlContent = r.content
+            soup = BeautifulSoup(htmlContent, 'html.parser')
+            ti=str(soup.find('title')).split(" - Google Drive</title>")[0].split("<title>")[1]
+            return f'<code>{ti}</code>\n{info_parsed["gdrive_link"]}'
         return info_parsed["gdrive_link"]
     except BaseException:
         return "Unable to Extract GDrive Link"
