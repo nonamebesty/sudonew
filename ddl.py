@@ -694,7 +694,7 @@ def gdtot(url):
             htmlContent = r.content
             soup = BeautifulSoup(htmlContent, 'html.parser')
             ti=str(soup.find('title')).split(" - Google Drive</title>")[0].split("<title>")[1]
-            return ti+str(drive_link[0])
+            return ti+"\n"+str(drive_link[0])
         else:
             raise DirectDownloadLinkException(
                 "ERROR: Drive Link not found, Try in your broswer"
@@ -769,7 +769,7 @@ def sharer_scraper(url):
             htmlContent = r.content
             soup = BeautifulSoup(htmlContent, 'html.parser')
             ti=str(soup.find('title')).split(" - Google Drive</title>")[0].split("<title>")[1]
-            return ti+str(drive_link[0])
+            return ti+"\n"+str(drive_link[0])
     else:
         raise DirectDownloadLinkException(
             "ERROR: Drive Link not found, Try in your broswer"
