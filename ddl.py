@@ -755,8 +755,13 @@ def sharer_scraper(url):
         raise DirectDownloadLinkException(
             "ERROR: Drive Link not found, Try in your broswer"
         )
-    if "drive.google.com" in res["url"]:
-        return res["url"]
+if "drive.google.com" in res["url"]:
+        puchuk = str(res["url"]).replace("uc?id=","open?id=").replace("&export=download","")+"&authuser=0"
+        r = requests.get(puchuk)
+        htmlContent = r.content
+        soup = BeautifulSoup(htmlContent, 'html.parser')
+        ti=str(soup.find('title')).split(" - Google Drive</title>")[0].split("<title>")[1]
+        return f'<code>{ti}</code>\n{res["url"]}'
     try:
         res = cget("GET", res["url"])
     except Exception as e:
