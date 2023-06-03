@@ -347,7 +347,7 @@ def psa_bypasser(psa_url):
 
 def rocklinks(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://share.techymedies.com"
+    DOMAIN = "https://dwnld.povathemes.com"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
@@ -356,12 +356,12 @@ def rocklinks(url):
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
     try:
-        inputs = soup.find(id="go-link").find_all(name="input")
+        inputs = soup.find_all("input")
     except BaseException:
         return "Incorrect Link"
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(10)
+    time.sleep(5)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
         return r.json()["url"]
@@ -1000,21 +1000,20 @@ def adfly(url):
 # gplinks
 def gplinks(url: str):
     client = cloudscraper.create_scraper(allow_brotli=False)
+    domain = "https://gplinks.co/"
+    referer = "https://revadvert.com/"
     vid = client.get(url, allow_redirects=False).headers["Location"].split("=")[-1]
     url = f"{url}/?{vid}"
     response = client.get(url, allow_redirects=False)
     soup = BeautifulSoup(response.content, "html.parser")
-    inputs = soup.find(id="go-link").find_all(name="input")
+    inputs = soup.find_all("input")
     data = {input.get("name"): input.get("value") for input in inputs}
-    time.sleep(10)
     headers = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(10)
     bypassed_url = client.post(domain + "links/go", data=data, headers=headers).json()[
         "url"
     ]
-    try:
-        return bypassed_url
-    except BaseException:
-        return "Something went wrong :("
+    return bypassed_url
 
 
 ##########################################################################
@@ -1252,14 +1251,14 @@ def xpshort(url):
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://www.jankarihoga.com/"
+    ref = "https://m.freshpagal.in/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
     inputs = soup.find_all("input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(8)
+    time.sleep(7)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
         return r.json()["url"]
@@ -1658,6 +1657,52 @@ def atglinks(url):
     return final_url
 
 
+# tnshort.net
+
+
+def tnshortnet(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://go.tnshort.net"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    resp = client.get(final_url)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(3)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
+
+# kpslink
+
+
+def kpslink(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://download.infotamizhan.xyz"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://infotamizhan.xyz/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(5)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
+
 ##########################################################################
 # helpers
 
@@ -1856,6 +1901,16 @@ def shortners(url):
     elif "https://files.technicalatg.com/" in url:
         print("entered atglinks:", url)
         return atglinks(url)
+
+    # tnshort.net
+    elif "https://link.tnshort.net/" in url:
+        print("entered tnshortnet:", url)
+        return tnshortnet(url)
+
+    # kpslink
+    elif "https://kpslink.in/" in url:
+        print("entered kpslink:", url)
+        return kpslink(url)
 
     # linkvertise
     elif ispresent(linkvertise_list, url):
