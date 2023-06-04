@@ -510,7 +510,7 @@ def docfile(
                 disable_web_page_preview=True,
             )
             return
-    if log_channel is not None:
+    if LOG_CHANNEL is not None:
         try:
             message.forward(chat_id=int(LOG_CHANNEL))
         except BaseException:
