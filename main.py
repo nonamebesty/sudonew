@@ -38,6 +38,18 @@ client = MongoClient(DB_URL)
 db = client["mydb"]
 collection = db["users"]
 
+if collection.find_one({"role":"admin"}):
+    pass
+else:
+    document = {"role":"admin","value":ADMIN_LIST}
+    collection.insert_one(document)
+
+if collection.find_one({"role":"auth_chat"}):
+    pass
+else:
+    document = {"role":"auth_chat","value":GROUP_ID}
+    collection.insert_one(document)
+
 # handle ineex
 def handleIndex(ele,message,msg):
     result = bypasser.scrapeIndex(ele)
