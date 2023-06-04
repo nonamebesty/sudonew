@@ -340,6 +340,16 @@ def psa_bypasser(psa_url):
             pass
     return links
 
+##########################################################################
+#earnlink
+
+def earnlink(url):
+    r = requests.get(url)
+    htmlContent = r.content
+    soup = BeautifulSoup(htmlContent, 'html.parser')
+    a = str(soup.find("script")).split('.attr("href","')[-1].split('")')[0]
+    return a
+
 
 ##########################################################################
 # rocklinks
@@ -1841,6 +1851,11 @@ def shortners(url):
     elif "https://oggylink.com/" in url:
         print("entered oggylink:", url)
         return oggylink(url)
+    
+    # earnlink
+    elif "https://earnlink.io/" in url:
+        print("entered earnlink:", url)
+        return earnlink(url)
 
     # ez4short
     elif "https://ez4short.com/" in url:
