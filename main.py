@@ -450,7 +450,7 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
             return
     if LOG_CHANNEL is not None:
         try:
-            message.forward(chat_id=int(log_channel))
+            message.forward(chat_id=int(LOG_CHANNEL))
         except BaseException:
             pass
     bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
@@ -512,7 +512,7 @@ def docfile(
             return
     if log_channel is not None:
         try:
-            message.forward(chat_id=int(log_channel))
+            message.forward(chat_id=int(LOG_CHANNEL))
         except BaseException:
             pass
 
