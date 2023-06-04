@@ -5,7 +5,7 @@ from copy import deepcopy
 from re import compile as recompile
 from re import match as rematch
 from re import sub as resub
-from time import sleep, time
+from time import sleep
 
 import chromedriver_autoinstaller
 import requests
@@ -36,28 +36,8 @@ scrapper_sites = [
     "animekaizoku",
     "animeremux",
     "mkvcinemas",
+    "intercelestial",
 ]
-
-# human readable time for mkvcinemas
-
-
-def get_readable_time(seconds: int) -> str:
-    result = ""
-    (days, remainder) = divmod(seconds, 86400)
-    days = int(days)
-    if days != 0:
-        result += f"{days}d"
-    (hours, remainder) = divmod(remainder, 3600)
-    hours = int(hours)
-    if hours != 0:
-        result += f"{hours}h"
-    (minutes, seconds) = divmod(remainder, 60)
-    minutes = int(minutes)
-    if minutes != 0:
-        result += f"{minutes}m"
-    seconds = int(seconds)
-    result += f"{seconds}s"
-    return result
 
 
 def looper(dict_key, click):
@@ -320,7 +300,6 @@ def scrapper(link):
                 asleep(5)
         return gd_txt
     elif "mkvcinemas" in link:
-        start = time()
         try:
             soup = BeautifulSoup(rget(link).content, "html.parser")
             links = []
@@ -380,5 +359,36 @@ def scrapper(link):
         bypassed_msg = ""
         for bypsd_link in bypassed_links:
             bypassed_msg += f"{bypsd_link}\n"
-        timelog = get_readable_time(time() - start)
-        return f"Bypassed Result:\n\n{bypassed_msg}\n\nTime Taken: {timelog}"
+        return bypassed_msg
+    elif "intercelestial" in link:
+        try:
+            chromedriver_autoinstaller.install()
+        except BaseException:
+            pass
+        generater = """//*[@id="soralink-human-verif-main"]"""
+        showlink = """//*[@id="generater"]"""
+        landing = """//*[@id="showlink"]"""
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        wd = webdriver.Chrome(options=chrome_options)
+        try:
+            wd.get(link)
+            sleep(10)
+            WebDriverWait(wd, 10).until(
+                ec.element_to_be_clickable((By.XPATH, landing))
+            ).click()
+            WebDriverWait(wd, 10).until(
+                ec.element_to_be_clickable((By.XPATH, generater))
+            ).click()
+            WebDriverWait(wd, 10).until(
+                ec.element_to_be_clickable((By.XPATH, showlink))
+            ).click()
+            wd.current_window_handle
+            IItab = wd.window_handles[1]
+            wd.switch_to.window(IItab)
+            print(f"Bypassed : {wd.current_url}")
+            return str(wd.current_url)
+        except Exception as err:
+            return f"Scrapping has failed! \nError: {err}"
