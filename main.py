@@ -29,7 +29,7 @@ GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}"))
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
 DB_URL = os.environ.get("DB_URL", "mongodb+srv://rushidhar:rushidharr@rushiiiii.1ebtm6s.mongodb.net/?retryWrites=true&w=majority")
 U_NAME = os.environ.get("BOT_USERNAME", "Rushidhar_S_1999_bot")
-LOG_CHANNEL = os.environ.get("LOG_CHANNEL", -1001922590395)
+LOG_CHANNEL = os.environ.get("LOG_CHANNEL", -1001877146782)
 
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)
 
