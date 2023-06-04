@@ -27,7 +27,7 @@ OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "Rushidhar1999")
 PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1001811511054")
 GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
-DB_URL = os.environ.get("DB_URL", "")
+DB_URL = os.environ.get("DB_URL", "mongodb+srv://rushidhar:rushidharr@rushiiiii.1ebtm6s.mongodb.net/?retryWrites=true&w=majority")
 U_NAME = os.environ.get("BOT_USERNAME", "Rushidhar_S_1999_bot")
 LOG_CHANNEL = os.environ.get("LOG_CHANNEL", -1001922590395)
 
