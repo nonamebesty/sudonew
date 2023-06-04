@@ -26,4 +26,5 @@ def get_readable_time(seconds):
 def shorten_url(url):
     #site_url = f"https://atglinks.com/api?api=36b6661ad0b4ceeb21c980d665e8159e4e88d622&url={url}&format=text"
     site_url = f"{url}"
-    return str(requests.get(site_url).text)
+    #return str(requests.get(site_url).text)
+    return site_url)
