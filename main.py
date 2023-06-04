@@ -162,6 +162,8 @@ async def send_start(
     client: pyrogram.client.Client,
     message: pyrogram.types.messages_and_media.message.Message,
 ):
+    if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
+        return
     if UPDATES_CHANNEL is not None:
         try:
             user = await client.get_chat_member(UPDATES_CHANNEL, message.from_user.id)
@@ -247,6 +249,8 @@ async def send_help(
     client: pyrogram.client.Client,
     message: pyrogram.types.messages_and_media.message.Message,
 ):
+    if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
+        return
     if UPDATES_CHANNEL is not None:
         try:
             user = await client.get_chat_member(UPDATES_CHANNEL, message.from_user.id)
@@ -397,6 +401,8 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 # links
 @app.on_message(filters.text)
 async def receive(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
+        return
     if UPDATES_CHANNEL is not None:
         try:
             user = await client.get_chat_member(UPDATES_CHANNEL, message.from_user.id)
@@ -457,6 +463,8 @@ def docfile(
     client: pyrogram.client.Client,
     message: pyrogram.types.messages_and_media.message.Message,
 ):
+    if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
+        return
     if UPDATES_CHANNEL is not None:
         try:
             user = client.get_chat_member(UPDATES_CHANNEL, message.from_user.id)
