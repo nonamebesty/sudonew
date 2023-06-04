@@ -61,7 +61,7 @@ def handleIndex(ele,message,msg):
 # loop thread
 def loopthread(message, otherss=False):
     uid = message.from_user.id
-    if uid not in admin_list:
+    if uid not in ADMIN_LIST:
         result = collection.find_one({"user_id": uid})
         if result is None:
             ad_code = str_to_b64(f"{uid}:{str(get_current_time() + 43200)}")
