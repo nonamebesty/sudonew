@@ -93,7 +93,7 @@ def loopthread(message, otherss=False):
                         [
                             InlineKeyboardButton(
                                 "Click Here To Refresh Token",
-                                url=ad_url,
+                                url=f"https://telegram.me/{U_NAME}?start={ad_code}",
                             )
                         ]
                     ]
