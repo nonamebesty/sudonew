@@ -1,19 +1,21 @@
-import pyrogram
-from pyrogram import Client
-from pyrogram import filters, enums
-from pyrogram.types import InlineKeyboardMarkup,InlineKeyboardButton
-from pyrogram.errors import UserNotParticipant
-import bypasser
 import os
-import ddl
-import requests
-import threading
-from texts import HELP_TEXT
-from ddl import ddllist
 import re
-from scraper import scrapper, scrapper_sites
-from pymongo import MongoClient
+import threading
+from time import sleep
 
+import pyrogram
+import requests
+from pymongo import MongoClient
+from pyrogram import Client, enums, filters
+from pyrogram.errors import UserNotParticipant
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
+import bypasser
+import ddl
+from ddl import ddllist
+from helpers import b64_to_str, get_current_time, shorten_url, str_to_b64
+from scraper import scrapper, scrapper_sites
+from texts import HELP_TEXT
 
 # bot
 bot_token = os.environ.get("TOKEN", "5772414951:AAHaniP9K1oZRG0IVDz98nN_mGxkMWJJbNc")
@@ -25,11 +27,11 @@ OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "Rushidhar1999")
 PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1001811511054")
 GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "USE_FULL_BOTZ"))
-app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
-DRIECT_BYPASS = [int(ch) for ch in (os.environ.get("GROUP_ID", f"")).split()]
 DB_URL = os.environ.get("DB_URL", "")
 U_NAME = os.environ.get("BOT_USERNAME", "Rushidhar_S_1999_bot")
 LOG_CHANNEL = os.environ.get("LOG_CHANNEL", -1001922590395)
+
+app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)
 
 # db setup
 client = MongoClient(DB_URL)
