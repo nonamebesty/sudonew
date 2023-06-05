@@ -59,6 +59,21 @@ def handleIndex(ele,message,msg):
 
 # loop thread
 def loopthread(message, otherss=False):
+    
+    urls = []
+    if otherss:
+        texts = message.caption
+    else:
+        texts = message.text
+
+    if texts in [None, ""]:
+        return
+    for ele in texts.split():
+        if "http://" in ele or "https://" in ele:
+            urls.append(ele)
+    if len(urls) == 0:
+        return
+    
     uid = message.from_user.id
     if uid not in ADMIN_LIST:
         result = collection.find_one({"user_id": uid})
@@ -83,7 +98,7 @@ def loopthread(message, otherss=False):
             return
         elif int(result["time_out"]) < get_current_time():
             ad_code = str_to_b64(f"{uid}:{str(get_current_time() + 43200)}")
-            ad_url = shorten_url(f"https://telegram.me/{u_name}?start={ad_code}")
+            ad_url = shorten_url(f"https://telegram.me/{U_NAME}?start={ad_code}")
             app.send_message(
                 message.chat.id,
                 f"Hey **{message.from_user.mention}** \n\nYour Ads token is expired, refresh your token and try again. \n\n**Token Timeout:** 12 hour \n\n**What is token?** \nThis is an ads token. If you pass 1 ad, you can use the bot for 12 hour after passing the ad.",
@@ -101,20 +116,6 @@ def loopthread(message, otherss=False):
             )
             return
         
-    urls = []
-    if otherss:
-        texts = message.caption
-    else:
-        texts = message.text
-
-    if texts in [None, ""]:
-        return
-    for ele in texts.split():
-        if "http://" in ele or "https://" in ele:
-            urls.append(ele)
-    if len(urls) == 0:
-        return
-
     if bypasser.ispresent(ddllist, urls[0]):
         msg = app.send_message(
             message.chat.id, "⚡ __generating...__", reply_to_message_id=message.id
