@@ -349,8 +349,7 @@ def earnlink(url):
     soup = BeautifulSoup(htmlContent, 'html.parser')
     a = str(soup.find("script"))
     regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
-    b = re.findall(regex, a)
-    return str(b[0][0])
+    b = str(re.findall(regex, a)[0][0])
 
 
 ##########################################################################
