@@ -1756,7 +1756,7 @@ def link1s(url):
     time.sleep(9)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
-        return r.json()["url"]
+        return str(r.json()["url"])
     except BaseException:
         return "Something went wrong :("
 
