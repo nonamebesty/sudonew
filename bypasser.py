@@ -1728,21 +1728,24 @@ def pdisks(url):
 
 #mdiskpro.in
 
-def mdiskpros(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+def mdiskproin(url):
+    client = requests.session()
     DOMAIN = "https://main.mdiskpro.xyz/"
-    url = url[:-1] if url[-1] == "/" else url
+    url = url[:-1] if url[-1] == '/' else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    resp = client.get(final_url)
+    ref = "https://babynamesmeanings.net/"
+    h = {"referer": ref}
+    while len(client.cookies) == 0:
+        resp = client.get(final_url,headers=h)
+        time.sleep(10)
     soup = BeautifulSoup(resp.content, "html.parser")
     inputs = soup.find_all("input")
-    data = {input.get("name"): input.get("value") for input in inputs}
-    h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(3)
+    data = { input.get('name'): input.get('value') for input in inputs }
+    h = { "x-requested-with": "XMLHttpRequest" }
+    time.sleep(8)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-    try:
-        return str(r.json()["url"])
+    try: return str(r.json()["url"])
     except BaseException:
         return "Something went wrong :("
 
@@ -2069,8 +2072,8 @@ def shortners(url):
         return unified(url)
 
     elif "mdiskpro.in/" in url or "main.mdiskpro.xyz/" in url:
-        print("entered mdiskpros:",url)
-        return mdiskpros(url)
+        print("entered mdiskproin:",url)
+        return mdiskproin(url)
 
     elif "mplaylink.com" in url:
         print("entered mplaylink:",url)
