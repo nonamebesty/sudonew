@@ -340,17 +340,6 @@ def psa_bypasser(psa_url):
             pass
     return links
 
-##########################################################################
-#earnlink
-
-def earnlink(url):
-    r = requests.get(url)
-    htmlContent = r.content
-    soup = BeautifulSoup(htmlContent, 'html.parser')
-    a = str(soup.find("script"))
-    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
-    b = str(re.findall(regex, a)[0][0])
-
 
 ##########################################################################
 # rocklinks
@@ -1714,6 +1703,43 @@ def kpslink(url):
         return "Something went wrong :("
 
 
+# earnlink
+
+
+def earnlink(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    response = client.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+    script_tag = str(soup.find("script"))
+    url_regex = r"""(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"""
+    a_href_tag = re.findall(url_regex, script_tag)
+    return str(a_href_tag[0][0])
+
+
+# greylink
+
+
+def greylink(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://go.greymatterslinks.in"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://djqunjab.in/"
+    h = {"referer": ref}
+    response = client.get(final_url, headers=h)
+    soup = BeautifulSoup(response.text, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(9)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
+
 ##########################################################################
 # helpers
 
@@ -1852,11 +1878,6 @@ def shortners(url):
     elif "https://oggylink.com/" in url:
         print("entered oggylink:", url)
         return oggylink(url)
-    
-    # earnlink
-    elif "https://earnlink.io/" in url:
-        print("entered earnlink:", url)
-        return earnlink(url)
 
     # ez4short
     elif "https://ez4short.com/" in url:
@@ -1927,6 +1948,16 @@ def shortners(url):
     elif "https://kpslink.in/" in url:
         print("entered kpslink:", url)
         return kpslink(url)
+
+    # earnlink
+    elif "https://earnlink.io/" in url:
+        print("entered earnlink:", url)
+        return earnlink(url)
+
+    # greylink
+    elif "https://greylinks.in/" in url or "https://go.greymatterslinks.in/" in url:
+        print("entered greylink:", url)
+        return greylink(url)
 
     # linkvertise
     elif ispresent(linkvertise_list, url):
