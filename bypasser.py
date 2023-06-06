@@ -1705,7 +1705,6 @@ def kpslink(url):
 
 # earnlink
 
-
 def earnlink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     response = client.get(url)
@@ -1718,7 +1717,6 @@ def earnlink(url):
 
 # greylink
 
-
 def greylink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     DOMAIN = "https://go.greymatterslinks.in"
@@ -1726,6 +1724,29 @@ def greylink(url):
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
     ref = "https://djqunjab.in/"
+    h = {"referer": ref}
+    response = client.get(final_url, headers=h)
+    soup = BeautifulSoup(response.text, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(9)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
+    
+# link1s
+
+def link1s(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://link1s.com"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://anhdep24.com/"
     h = {"referer": ref}
     response = client.get(final_url, headers=h)
     soup = BeautifulSoup(response.text, "html.parser")
@@ -1958,6 +1979,10 @@ def shortners(url):
     elif "https://greylinks.in/" in url or "https://go.greymatterslinks.in/" in url:
         print("entered greylink:", url)
         return greylink(url)
+    
+    elif "https://link1s.com/" in url:
+        print("entered link1s:", url)
+        return link1s(url)
 
     # linkvertise
     elif ispresent(linkvertise_list, url):
