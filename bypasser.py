@@ -1812,23 +1812,22 @@ def tamizhmasters(url):
         return "Something went wrong :("
 
 def krownlinks(url):
-    client = requests.session()
-    DOMAIN = "https://link.gyanitheme.com/"
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://link.gyanitheme.com"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    resp = client.get(final_url)
+    ref = "blog.hostadviser.net/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
-    try:
-        inputs = soup.find(id="go-link").find_all(name="input")
-    except BaseException:
-        return "Incorrect Link"
+    inputs = soup.find_all("input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(10)
+    time.sleep(8)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
-        return r.json()["url"]
+        return str(r.json()["url"])
     except BaseException:
         return "Something went wrong :("
         
