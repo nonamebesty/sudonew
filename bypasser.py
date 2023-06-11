@@ -1315,41 +1315,21 @@ def mdiskinnet(url):
 
 def mdiskshortner(url):
     client = requests.session()
+    #client = cloudscraper.create_scraper(allow_brotli=False)
     DOMAIN = "https://mdiskshortner.link"
     url = url[:-1] if url[-1] == "/" else url
-    code = url.split("/")[-1]
-    final_url = f"{DOMAIN}/{code}"
-    resp = client.get(final_url)
+    ref = "https://apps.proappapk.com/"
+    h = {"referer": ref}
+    resp = client.get(url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
-    try:
-        inputs = soup.find_all("input")
-    except BaseException:
-        return "Incorrect Link"
+    inputs = soup.find_all("input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(5)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
         return r.json()["url"]
     except BaseException:
         return "Something went wrong :("
-
-#def mdiskshortner(url):
-#    client = cloudscraper.create_scraper(allow_brotli=False)
-#    DOMAIN = "https://mdiskshortner.link"
-#    url = url[:-1] if url[-1] == "/" else url
-#    ref = "https://apps.proappapk.com/"
-#    h = {"referer": ref}
-#    resp = client.get(url, headers=h)
-#    soup = BeautifulSoup(resp.content, "html.parser")
-#    inputs = soup.find_all("input")
-#    data = {input.get("name"): input.get("value") for input in inputs}
-#    h = {"x-requested-with": "XMLHttpRequest"}
-#    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-#    try:
-#        return r.json()["url"]
-#    except BaseException:
-#        return "Something went wrong :("
 
 
 # mdiskpro
