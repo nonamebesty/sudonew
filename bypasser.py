@@ -1314,7 +1314,7 @@ def mdiskinnet(url):
 # mdiskshortner
 
 def mdiskshortner(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.session()
     DOMAIN = "https://mdiskshortner.link"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
@@ -1322,7 +1322,7 @@ def mdiskshortner(url):
     resp = client.get(final_url)
     soup = BeautifulSoup(resp.content, "html.parser")
     try:
-        inputs = soup.find(id="go-link").find_all(name="input")
+        inputs = soup.find_all("input")
     except BaseException:
         return "Incorrect Link"
     data = {input.get("name"): input.get("value") for input in inputs}
