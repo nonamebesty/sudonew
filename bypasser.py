@@ -347,7 +347,7 @@ def psa_bypasser(psa_url):
 
 def rocklinks(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://dwnld.povathemes.com"
+    DOMAIN = "https://share.techymedies.com"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
@@ -1314,8 +1314,7 @@ def mdiskinnet(url):
 # mdiskshortner
 
 def mdiskshortner(url):
-    client = requests.session()
-    #client = cloudscraper.create_scraper(allow_brotli=False)
+    client = cloudscraper.create_scraper(allow_brotli=False)
     DOMAIN = "https://mdiskshortner.link"
     url = url[:-1] if url[-1] == "/" else url
     ref = "https://apps.proappapk.com/"
@@ -1935,7 +1934,7 @@ def shortners(url):
         return droplink(url)
 
     # rocklinks
-    elif "https://go.rocklinks.net/" in url:
+    elif "https://go.rocklinks.net/" in url or "https://rocklinks.net/" in url:
         print("entered rocklinks:", url)
         return rocklinks(url)
 
