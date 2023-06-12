@@ -1851,6 +1851,26 @@ def seturl(url):
     except BaseException:
         return "Something went wrong :("
 
+def pkinme(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://go.paisakamalo.in"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "weightloss.techkeshri.com/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return str(r.json()["url"])
+    except BaseException:
+        return "Something went wrong :("
+
 
 #Jai Add Later
 ##########################################################################
@@ -1902,10 +1922,10 @@ def shortners(url):
         print("entered short2url:", url)
         return short2url(url)
 
-    # Tnlink
-    elif "https://link.tnlink.in/" in url or "https://tnlink.in/" in url:
-        print("entered tnlink:", url)
-        return tnlink(url)
+    # pkinme
+    elif "https://pkin.me/" in url or "https://go.paisakamalo.in/" in url:
+        print("entered pkinme:", url)
+        return pkinme(url)
 
     # shorte
     elif "https://shorte.st/" in url:
