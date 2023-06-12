@@ -1851,23 +1851,24 @@ def seturl(url):
     except BaseException:
         return "Something went wrong :("
 
+
 def pkinme(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     DOMAIN = "https://go.paisakamalo.in"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "weightloss.techkeshri.com/"
+    ref = "https://weightloss.techkeshri.com/"
     h = {"referer": ref}
-    resp = client.get(final_url, headers=h)
-    soup = BeautifulSoup(resp.content, "html.parser")
+    response = client.get(final_url, headers=h)
+    soup = BeautifulSoup(response.text, "html.parser")
     inputs = soup.find_all("input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(8)
+    time.sleep(9)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
-        return str(r.json()["url"])
+        return r.json()["url"]
     except BaseException:
         return "Something went wrong :("
 
