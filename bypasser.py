@@ -1833,11 +1833,12 @@ def krownlinks(url):
 
 def seturl(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://seturl.in"
+    DOMAIN = "https://set.seturl.in"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://mphealth.online/"
+    ref = "https://shortner.mphealth.online/"
+    #ref = "https://petrainer.in/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
@@ -2141,7 +2142,7 @@ def shortners(url):
         return krownlinks(url)
 
 #seturl
-    elif "seturl.in" in url or "link.seturl.in" in url:
+    elif "seturl.in" in url or "link.seturl.in" in url or "set.seturl.in" in url:
         print("entered krownlinks:",url)
         return krownlinks(url)
 
