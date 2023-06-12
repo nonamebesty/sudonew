@@ -1837,7 +1837,7 @@ def seturl(url):
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "mphealth.online/"
+    ref = "https://mphealth.online/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
@@ -1871,6 +1871,7 @@ def pkinme(url):
         return r.json()["url"]
     except BaseException:
         return "Something went wrong :("
+
 
 
 #Jai Add Later
