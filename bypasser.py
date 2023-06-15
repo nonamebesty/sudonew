@@ -1591,26 +1591,25 @@ def atglinks(url):
     return final_url
 
 
-# tnshort.net
 
 
-def tnshortnet(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://go.tnshort.net"
-    url = url[:-1] if url[-1] == "/" else url
-    code = url.split("/")[-1]
-    final_url = f"{DOMAIN}/{code}"
-    resp = client.get(final_url)
-    soup = BeautifulSoup(resp.content, "html.parser")
-    inputs = soup.find_all("input")
-    data = {input.get("name"): input.get("value") for input in inputs}
-    h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(3)
-    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-    try:
-        return r.json()["url"]
-    except BaseException:
-        return "Something went wrong :("
+#def tnshortnet(url):
+#    client = cloudscraper.create_scraper(allow_brotli=False)
+#    DOMAIN = "https://go.tnshort.net"
+#    url = url[:-1] if url[-1] == "/" else url
+#    code = url.split("/")[-1]
+#    final_url = f"{DOMAIN}/{code}"
+#    resp = client.get(final_url)
+#    soup = BeautifulSoup(resp.content, "html.parser")
+#    inputs = soup.find_all("input")
+#    data = {input.get("name"): input.get("value") for input in inputs}
+#    h = {"x-requested-with": "XMLHttpRequest"}
+#    time.sleep(3)
+#    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+#    try:
+#        return r.json()["url"]
+#    except BaseException:
+#        return "Something went wrong :("
 
 
 # kpslink
@@ -1874,6 +1873,26 @@ def pkinme(url):
         return "Something went wrong :("
 
 
+# tnshort.net
+def tnshortnet(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://go.tnshort.net"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://financeyogi.net/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return str(r.json()["url"])
+    except BaseException:
+        return "Something went wrong :("
 
 #Jai Add Later
 ##########################################################################
