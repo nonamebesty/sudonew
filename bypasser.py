@@ -1635,6 +1635,26 @@ def kpslink(url):
     except BaseException:
         return "Something went wrong :("
 
+def v2kpslink(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://v2.download.infotamizhan.xyz"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://infotamizhan.xyz/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
 
 # earnlink
 
@@ -2098,6 +2118,11 @@ def shortners(url):
     elif "https://kpslink.in/" in url:
         print("entered kpslink:", url)
         return kpslink(url)
+
+    elif "https://v2.kpslink.in/" in url:
+        print("entered v2kpslink:", url)
+        return v2kpslink(url)
+
 
     # earnlink
     elif "https://earnlink.io/" in url:
