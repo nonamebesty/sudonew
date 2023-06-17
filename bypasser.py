@@ -1935,9 +1935,9 @@ def dalink(url):
     except BaseException:
         return "Something went wrong :("
 
-def onepagelink(url):
+def onepagelinkin(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://go.onepagelink.in"
+    DOMAIN = "https://go.onepagelink.in/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
@@ -2142,8 +2142,8 @@ def shortners(url):
 
     # onepage
     elif "https://onepagelink.in" in url or "https://go.onepagelink.in":
-        print("entered onepagelink:", url)
-        return onepagelink(url)
+        print("entered onepagelinkin:", url)
+        return onepagelinkin(url)
 
     # indianshortner
     elif "indianshortner.in" in url:
