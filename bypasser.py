@@ -1935,6 +1935,26 @@ def dalink(url):
     except BaseException:
         return "Something went wrong :("
 
+def onepagelink(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://go.onepagelink.in"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://gorating.in"
+    h = {"referer": ref}
+    response = client.get(final_url, headers=h)
+    soup = BeautifulSoup(response.text, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(9)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
 #Jai Add Later
 ##########################################################################
 # helpers
@@ -2119,6 +2139,11 @@ def shortners(url):
     elif "tnshort.in" in url:
         print("entered tnshort:", url)
         return tnshort(url)
+
+    # onepage
+    elif "onepagelink.in" in url or "go.onepagelink.in":
+        print("entered onepagelink:", url)
+        return onepagelink(url)
 
     # indianshortner
     elif "indianshortner.in" in url:
