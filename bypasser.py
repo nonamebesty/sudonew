@@ -2141,7 +2141,7 @@ def shortners(url):
         return tnshort(url)
 
     # onepage
-    elif "onepagelink.in" in url or "go.onepagelink.in":
+    elif "https://onepagelink.in" in url or "https://go.onepagelink.in":
         print("entered onepagelink:", url)
         return onepagelink(url)
 
