@@ -2221,7 +2221,7 @@ def shortners(url):
         return pdisks(url)
 
 #urlshorten
-    elif "urlshorten.in" in url or "link.urlshorten.in" in url:
+    elif "urlshorten.in" in url or "link.urlshorten.in" in url or "play.urlshorten.in" in url:
         print("entered urlshorten:",url)
         return urlshorten(url)
 
