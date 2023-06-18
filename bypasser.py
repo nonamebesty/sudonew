@@ -1807,6 +1807,27 @@ def urlshorten(url):
     except BaseException:
         return "Something went wrong :("
 
+def urlshortens(url):
+    client = requests.session()
+    DOMAIN = "https://play.urlshorten.in/"
+    url = url[:-1] if url[-1] == '/' else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://us.urlshorten.in/"
+    h = {"referer": ref}
+    while len(client.cookies) == 0:
+        resp = client.get(final_url,headers=h)
+        time.sleep(5)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = { input.get('name'): input.get('value') for input in inputs }
+    h = { "x-requested-with": "XMLHttpRequest" }
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try: return str(r.json()["url"])
+    except BaseException:
+        return "Something went wrong :("
+
 
 def tamizhmasters(url):
     client = requests.session()
@@ -2221,9 +2242,12 @@ def shortners(url):
         return pdisks(url)
 
 #urlshorten
-    elif "urlshorten.in" in url or "link.urlshorten.in" in url or "play.urlshorten.in" in url:
+    elif "urlshorten.in" in url or "link.urlshorten.in" in url:
         print("entered urlshorten:",url)
         return urlshorten(url)
+    elif "link.urlshorten.in" in url or "play.urlshorten.in" in url or "us.urlshorten.in" in url:
+        print("entered urlshortens:",url)
+        return urlshortens(url)
 
     # tamizhmasters
     elif "tamizhmasters.net/" in url:
