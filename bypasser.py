@@ -2201,7 +2201,7 @@ def shortners(url):
         print("entered greylink:", url)
         return greylink(url)
 
-    elif "https://dalink.in/" in url or "https://dlx.tamilhit.tech/" in url:
+    elif "https://dalink.in/" in url or "https://tamilhit.tech/-/" in url:
         print("entered dalink:", url)
         return dalink(url)
     
