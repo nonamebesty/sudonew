@@ -16,8 +16,8 @@ import requests
 
 from exceptions import DirectDownloadLinkException
 
-UPTOBOX_TOKEN = environ.get("UPTOBOX_TOKEN", None)
-ndus = environ.get("TERA_COOKIE", "YuFdf37teHuicfxoySXb0F1cIcy-0QAhqKYh4q1m")
+UPTOBOX_TOKEN = environ.get("UPTOBOX_TOKEN", "4a4ecf35552fea876da1d63e7fd000d2cb2fo")
+ndus = environ.get("TERA_COOKIE", "YQOR7exteHuiC7XNl_TAD_ZaXGexSokJJwoblC4S")
 if ndus is None:
     TERA_COOKIE = None
 else:
