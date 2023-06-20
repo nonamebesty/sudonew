@@ -1603,23 +1603,23 @@ def atglinks(url):
 
 
 
-#def tnshortnet(url):
-#    client = cloudscraper.create_scraper(allow_brotli=False)
-#    DOMAIN = "https://go.tnshort.net"
-#    url = url[:-1] if url[-1] == "/" else url
-#    code = url.split("/")[-1]
-#    final_url = f"{DOMAIN}/{code}"
-#    resp = client.get(final_url)
-#    soup = BeautifulSoup(resp.content, "html.parser")
-#    inputs = soup.find_all("input")
-#    data = {input.get("name"): input.get("value") for input in inputs}
-#    h = {"x-requested-with": "XMLHttpRequest"}
-#    time.sleep(3)
-#    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-#    try:
-#        return r.json()["url"]
-#    except BaseException:
-#        return "Something went wrong :("
+def shrinke(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://shrinke.me"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    resp = client.get(final_url)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(9)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
 
 
 # kpslink
@@ -2263,6 +2263,11 @@ def shortners(url):
     elif "tamizhmasters.net/" in url:
         print("entered tamizhmasters:",url)
         return tamizhmasters(url)
+
+    # shrinkme
+    elif "shrinke.me/" in url:
+        print("entered shrinke:",url)
+        return shrinke(url)
 
 #krownlinks
     elif "krownlinks.me" in url or "link.gyanitheme.com" in url:
