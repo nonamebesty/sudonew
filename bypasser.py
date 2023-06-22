@@ -1948,7 +1948,7 @@ def tnshortnet(url):
 
 def dalink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://tamilhit.tech/-"
+    DOMAIN = "https://otha.tamilhit.tech/-"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
@@ -2211,7 +2211,7 @@ def shortners(url):
         print("entered greylink:", url)
         return greylink(url)
 
-    elif "https://dalink.in/" in url or "https://tamilhit.tech/-/" in url:
+    elif "https://dalink.in/" in url or "https://otha.tamilhit.tech/" in url:
         print("entered dalink:", url)
         return dalink(url)
     
