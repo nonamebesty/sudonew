@@ -1627,7 +1627,7 @@ def shrinke(url):
 
 def kpslink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://download.infotamizhan.xyz"
+    DOMAIN = "https://download.infotamizhan.xyz/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
@@ -1638,7 +1638,7 @@ def kpslink(url):
     inputs = soup.find_all("input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(8)
+    time.sleep(3)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
         return r.json()["url"]
