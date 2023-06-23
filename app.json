@@ -7,15 +7,15 @@
     "env": {
         "TOKEN": {
             "description": "Your bot token.",
-            "required": true
+            "required": false
         },
         "ID": {
             "description": "Get this value from https://my.telegram.org",
-            "required": true
+            "required": false
         },
         "HASH": {
             "description": "Get this value from https://my.telegram.org",
-            "required": true
+            "required": false
         },
         "CRYPT": {
             "description": "Your GDTot Crypt!",
