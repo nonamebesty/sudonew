@@ -1647,7 +1647,7 @@ def kpslink(url):
 
 def v2kpslink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://v2.download.infotamizhan.xyz"
+    DOMAIN = "https://v2download.infotamizhan.xyz"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
