@@ -617,7 +617,7 @@ def uploadee(url: str) -> str:
         return f"ERROR: Failed to acquire download URL from upload.ee for : {url}"
 
 
-def terabox(url) -> str:
+#def terabox(url) -> str:
 def terabox(url):
     sess = session()
     # if TERA_COOKIE is not None: session.cookies.update(TERA_COOKIE)
