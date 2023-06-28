@@ -153,6 +153,14 @@ def loopthread(message, otherss=False):
         if temp is not None:
             link = link + temp + "\n\n"
 
+
+    if otherss:
+        try:
+            app.send_photo(message.chat.id, message.photo.file_id, f'__{link}__', reply_to_message_id=message.id)
+            app.delete_messages(message.chat.id,[msg.id])
+            return
+        except: pass
+
     try:
         app.edit_message_text(
             message.chat.id, msg.id, f"__{link}__", disable_web_page_preview=True
