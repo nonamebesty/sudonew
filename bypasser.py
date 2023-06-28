@@ -1601,7 +1601,12 @@ def atglinks(url):
     return final_url
 
 
-
+def atglinkss(url):
+    atg = ""
+    if "&url=" in url:
+        atg = str(url).split("&url=")[1]
+        atg = base64.b64decode(str(atg).replace("&type=2","")).decode("utf-8")
+    return str(atg)
 
 def shrinke(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
@@ -1938,7 +1943,7 @@ def tnshortnet(url):
     inputs = soup.find_all("input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(8)
+    time.sleep(3)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
         return str(r.json()["url"])
@@ -2006,6 +2011,224 @@ def vipurl(url):
         return r.json()["url"]
     except BaseException:
         return "Something went wrong :("
+
+# owllinknet
+
+
+def owllinknet(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://owllink.net"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://uptechnologys.com/"
+    h = {"referer": ref}
+    response = client.get(final_url, headers=h)
+    soup = BeautifulSoup(response.text, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(10)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
+
+# linksfireco
+
+
+def linksfireco(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://blog.linksfire.co"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://bartendingexpert.com/"
+    h = {"referer": ref}
+    response = client.get(final_url, headers=h)
+    soup = BeautifulSoup(response.text, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(10)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
+# powerlinks
+
+def powerlinks(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "http://powerlinks.site"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "http://powerlinks.site/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(5)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
+# tulinks
+
+def tulinks(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://tulinks.one"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://www.blogger.com/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
+# go tulinks
+
+def gotulinks(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://go.tulinks.online"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://tutelugu.co/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
+# powerlinkz
+
+def powerlinkz(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://powerlinkz.in"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://powerlinkz.in/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
+# powerdisk
+
+def powerdisk(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://powerdisk.pro"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://powerdisk.pro/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(5)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
+# kwik
+    
+def kwik(link):
+    def get_string(content: str, s1: int, s2: int) -> str:
+        CHARACTER_MAP = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/"
+        slice_2 = CHARACTER_MAP[0:s2]
+        acc = 0
+        for n, i in enumerate(content[::-1]):
+            acc += int(i if i.isdigit() else 0) * s1**n
+        k = ''
+        while acc > 0:
+            k = slice_2[int(acc % s2)] + k
+            acc = (acc - (acc % s2)) / s2
+        return k or '0'
+    def decrypt(full_string: str, key: str, v1: int, v2: int) -> str:
+        v1, v2 = int(v1), int(v2)
+        r, i = "", 0
+        while i < len(full_string):
+            s = ""
+            while (full_string[i] != key[v2]):
+                s += full_string[i]
+                i += 1
+            j = 0
+            while j < len(key):
+                s = s.replace(key[j], str(j))
+                j += 1
+            r += chr(int(get_string(s, v2, 10)) - v1)
+            i += 1
+        return r
+    def get_stream_url_from_kwik(url):
+        session = requests.session()
+        f_content = requests.get(
+            url,
+            headers={
+                'referer': 'https://kwik.cx/'
+            }
+        )
+        KWIK_PARAMS_RE =re.compile(r'\("(\w+)",\d+,"(\w+)",(\d+),(\d+),\d+\)')
+        decrypted = decrypt(
+            *
+            KWIK_PARAMS_RE.search(
+                f_content.text
+            ).group(
+                1, 2,
+                3, 4
+            )
+        )
+        code = 419
+        KWIK_D_URL = re.compile(r'action="([^"]+)"')
+        KWIK_D_TOKEN = re.compile(r'value="([^"]+)"')
+        while code != 302:
+            content = session.post(
+                KWIK_D_URL.search(decrypted).group(1),
+                allow_redirects=False,
+                data={'_token': KWIK_D_TOKEN.search(decrypted).group(1)},
+                headers={'referer': str(f_content.url),'cookie': f_content.headers.get('set-cookie')})
+            code = content.status_code
+        return content.headers.get('location')
+    return get_stream_url_from_kwik(link)
+
 
 #Jai Add Later
 ##########################################################################
@@ -2202,11 +2425,16 @@ def shortners(url):
         print("entered indianshortner:", url)
         return indshort(url)
 
-    # atglinks
+        # atglinks
     elif "https://files.technicalatg.com/" in url:
         print("entered atglinks:", url)
         return atglinks(url)
 
+    # atglinks
+    elif "https://atglinks.com/" in url:
+        print("entered atglinks:", url)
+        return atglinkss(url)
+        
     # tnshort.net
     elif "https://link.tnshort.net/" in url:
         print("entered tnshortnet:", url)
@@ -2303,6 +2531,40 @@ def shortners(url):
     elif "link.vipurl.in" in url or "count.vipurl.in" in url or "vipurl.in" in url:
         print("entered vipurl:",url)
         return vipurl(url)
+
+    # owllink.net
+    elif "https://go.owllink.net/" in url:
+        print("entered owllinknet:", url)
+        return owllinknet(url)
+
+    # linksfire.co
+    elif "https://link.linksfire.co/" in url:
+        print("entered linksfireco:", url)
+        return linksfireco(url)
+    
+    elif "https://kwik.cx/" in url:
+        print("entered kwik:", url)
+        return kwik(url)
+
+    elif "http://powerlinks.site" in url:
+        print("entered powerlinks:",url)
+        return powerlinks(url)
+
+    elif "https://tulinks.one" in url:
+        print("entered tulinks:",url)
+        return tulinks(url)
+
+    elif "https://go.tulinks.online" in url:
+        print("entered go tulinks:",url)
+        return gotulinks(url)
+
+    elif "https://powerlinkz.in" in url:
+        print("entered powerlinkz:",url)
+        return powerlinkz(url)
+
+    elif "https://powerdisk.pro" in url:
+        print("entered powerlinkz:",url)
+        return powerdisk(url)
 
     # else
     else:
