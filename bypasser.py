@@ -2554,7 +2554,7 @@ def shortners(url):
         print("entered tulinks:",url)
         return tulinks(url)
 
-    elif "https://go.tulinks.online" in url:
+    elif "https://go.tulinks.online" in url or "https://tulinks.online" in url:
         print("entered go tulinks:",url)
         return gotulinks(url)
 
