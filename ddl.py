@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 from cfscrape import create_scraper
 from lk21 import Bypass
 from lxml import etree
-from requests import get, path
+from requests import get
 import requests
 
 from exceptions import DirectDownloadLinkException
@@ -618,8 +618,8 @@ def uploadee(url: str) -> str:
 
 
 def terabox(url) -> str:
-    if not path.isfile("terabox.txt"):
-        raise DirectDownloadLinkException("ERROR: terabox.txt not found")
+    #if not path.isfile("terabox.txt"):
+        #raise DirectDownloadLinkException("ERROR: terabox.txt not found")
     session = create_scraper()
     try:
         res = session.request("GET", url)
