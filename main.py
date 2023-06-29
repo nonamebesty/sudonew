@@ -463,15 +463,14 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
 
 # doc thread
 def docthread(message):
-    if message.document.file_name.endswith("dlc"):
-        msg = app.send_message(message.chat.id, "🔎 __bypassing...__", reply_to_message_id=message.id)
-        print("sent DLC file")
-        sess = requests.session()
-        file = app.download_media(message)
-        dlccont = open(file,"r").read()
-        link = bypasser.getlinks(dlccont,sess)
-        app.edit_message_text(message.chat.id, msg.id, f'__{link}__')
-        os.remove(file)
+    msg = app.send_message(message.chat.id, "🔎 **Bypassing...**", reply_to_message_id=message.id)
+    print("sent DLC file")
+    sess = requests.session()
+    file = app.download_media(message)
+    dlccont = open(file,"r").read()
+    link = bypasser.getlinks(dlccont,sess)
+    app.edit_message_text(message.chat.id, msg.id, f'**{link}**')
+    os.remove(file)
 
 # files
 @app.on_message(filters.document | filters.photo | filters.video)
