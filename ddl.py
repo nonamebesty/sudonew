@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 from cfscrape import create_scraper
 from lk21 import Bypass
 from lxml import etree
-from requests import get
+from requests import get, path
 import requests
 
 from exceptions import DirectDownloadLinkException
