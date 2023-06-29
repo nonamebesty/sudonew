@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 from cfscrape import create_scraper
 from lk21 import Bypass
 from lxml import etree
-from requests import get, session
+from requests import get
 import requests
 
 from exceptions import DirectDownloadLinkException
@@ -617,39 +617,29 @@ def uploadee(url: str) -> str:
         return f"ERROR: Failed to acquire download URL from upload.ee for : {url}"
 
 
-#def terabox(url) -> str:
-def terabox(url):
-    sess = session()
-    # if TERA_COOKIE is not None: session.cookies.update(TERA_COOKIE)
-    sess.get(url)
-
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/112.0',
-        'Accept': 'application/json, text/plain, */*',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Content-Type': 'application/json',
-        'Origin': 'https://3es.vercel.app',
-        'Connection': 'keep-alive',
-        'Referer': 'https://3es.vercel.app/',
-    }
-
-    json_data = {'url': url}
-    response = sess.post('https://3es.vercel.app/api/getDetail', headers=headers, json=json_data).json()
-
-    if response["result"]:response = response["data"]
-    else: return None
-
-    json_data = {
-        'shareid': response["shareid"],
-        'uk': response["uk"],
-        'sign': response["sign"],
-        'timestamp': response["timestamp"],
-        'fid': response["list"][0]['fs_id'],
-    }
-
-    res = sess.post('https://3es.vercel.app/api/getDownloadUrl', headers=headers, json=json_data).json()
-    if res["result"]: return res["data"]
-    else: return 'ERROR: Link not found'
+def terabox(url) -> str:
+    if not path.isfile("terabox.txt"):
+        raise DirectDownloadLinkException("ERROR: terabox.txt not found")
+    session = create_scraper()
+    try:
+        res = session.request("GET", url)
+        key = res.url.split("?surl=")[-1]
+        jar = MozillaCookieJar("terabox.txt")
+        jar.load()
+        session.cookies.update(jar)
+        res = session.request(
+            "GET",
+            f"https://www.terabox.com/share/list?app_id=250528&shorturl={key}&root=1",
+        )
+        result = res.json()["list"]
+    except Exception as e:
+        raise DirectDownloadLinkException(f"ERROR: {e.__class__.__name__}")
+    if len(result) > 1:
+        raise DirectDownloadLinkException("ERROR: Can't download mutiple files")
+    result = result[0]
+    if result["isdir"] != "0":
+        raise DirectDownloadLinkException("ERROR: Can't download folder")
+    return result["dlink"]
 
 
 
