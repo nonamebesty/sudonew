@@ -2229,6 +2229,28 @@ def kwik(link):
         return content.headers.get('location')
     return get_stream_url_from_kwik(link)
 
+# viplinks.io
+def viplinks(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://m.vip-link.net/"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    #ref = "https://tracktotech.in/"
+    #ref = "https://lyricsbaazaar.com/"
+    ref = "https://thebloggerspoint.in/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(3)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return str(r.json()["url"])
+    except BaseException:
+        return "Something went wrong :("
 
 #Jai Add Later
 ##########################################################################
@@ -2565,6 +2587,10 @@ def shortners(url):
     elif "https://powerdisk.pro" in url:
         print("entered powerlinkz:",url)
         return powerdisk(url)
+
+    elif "https://viplinks.io" in url or "https://m.vip-link.net" in url:
+        print("entered viplinks:",url)
+        return viplinks(url)
 
     # else
     else:
