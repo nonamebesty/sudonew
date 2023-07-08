@@ -571,7 +571,7 @@ def getfirst(url):
 def ez4(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     DOMAIN = "https://ez4short.com"
-    ref = "https://techmody.io/"
+    ref = "https://tech5s.co/"
     h = {"referer": ref}
     resp = client.get(url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
