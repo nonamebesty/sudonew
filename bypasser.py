@@ -1604,7 +1604,7 @@ def atglinks(url):
 def atglinkss(url):
     atg = ""
     if "&url=" in url:
-        atg = str(url).split("&url=")[1]
+        atg = str(url).split("&url=")[-1]
         atg = base64.b64decode(str(atg).replace("&type=2","")).decode("utf-8")
     return str(atg)
 
@@ -1636,7 +1636,7 @@ def kpslink(url):
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://sportwish.net/"
+    ref = "https://infotamizhan.xyz/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
