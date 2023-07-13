@@ -2253,6 +2253,27 @@ def viplinks(url):
     except BaseException:
         return "Something went wrong :("
 
+
+def mdisklink(url):
+    client = requests.session()
+    DOMAIN = "https://gotolink.mdisklink.link/"
+    url = url[:-1] if url[-1] == '/' else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://loans.yosite.net/"
+    h = {"referer": ref}
+    while len(client.cookies) == 0:
+        resp = client.get(final_url,headers=h)
+        time.sleep(7)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = { input.get('name'): input.get('value') for input in inputs }
+    h = { "x-requested-with": "XMLHttpRequest" }
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try: return str(r.json()["url"])
+    except BaseException:
+        return "Something went wrong :("
 #Jai Add Later
 ##########################################################################
 # helpers
@@ -2482,6 +2503,10 @@ def shortners(url):
     elif "https://greylinks.in/" in url or "https://go.greymatterslinks.in/" in url:
         print("entered greylink:", url)
         return greylink(url)
+        
+    elif "https://gotolink.mdisklink.link/" in url or "https://mdisklink.link/" in url:
+        print("entered mdisklink:", url)
+        return mdisklink(url)
 
     elif "https://dalink.in/" in url or "https://otha.tamilhit.tech/" in url:
         print("entered dalink:", url)
