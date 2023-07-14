@@ -802,22 +802,25 @@ def flashlink(url):
 
 # short2url
 
-
 def short2url(url):
-    DOMAIN = "https://techyuth.xyz/blog"
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://techyuth.xyz/blog/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    resp = client.get(final_url)
+    ref = "https://blog.mphealth.online/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
-    inputs = soup.find(id="go-link").find_all(name="input")
+    inputs = soup.find_all("input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(10)
+    time.sleep(8)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-    return r.json()["url"]
-
+    try:
+        return str(r.json()["url"])
+    except BaseException:
+        return "Something went wrong :("
 
 #######################################################
 # anonfiles
@@ -1784,7 +1787,7 @@ def mdiskproin(url):
 #mplaylink
 def mplaylink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://mplaylink.com"
+    DOMAIN = "https://xtreamdisk.com/test/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
@@ -2388,7 +2391,7 @@ def shortners(url):
         return flashlink(url)
 
     # short2url
-    elif "https://link.short2url.in/" in url:
+    elif "https://link.short2url.in/" in url or "https://techyuth.xyz/blog/" in url:
         print("entered short2url:", url)
         return short2url(url)
 
@@ -2602,7 +2605,7 @@ def shortners(url):
         print("entered mdiskproin:",url)
         return mdiskproin(url)
 
-    elif "mplaylink.com" in url:
+    elif "mplaylink.com" in url or "https://xtreamdisk.com/test/" in url:
         print("entered mplaylink:",url)
         return mplaylink(url)
 
