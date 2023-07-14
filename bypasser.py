@@ -709,7 +709,7 @@ def shareus(url):
 
 def shrslink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://shrslink.in"
+    DOMAIN = "https://shrs.link"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
@@ -2394,7 +2394,7 @@ def shortners(url):
     elif "https://shrs.link/" in url or "https://shrslink.xyz/" in url:
         print("entered shrslink:", url)
         return shrslink(url)
-        
+
     # shortingly
     elif "https://shortingly.in/" in url:
         print("entered shortingly:", url)
