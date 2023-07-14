@@ -2368,7 +2368,7 @@ def shortners(url):
         return filecrypt(url)
 
     # shareus
-    elif "https://shareus.io/" in url:
+    elif "https://shareus.io/" in url or "https://shrs.link/" in url:
         print("entered shareus:", url)
         return shareus(url)
 
