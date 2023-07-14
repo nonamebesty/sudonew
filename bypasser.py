@@ -732,6 +732,26 @@ def shortingly(url):
     except BaseException:
         return "Something went wrong :("
 
+def shortinglyclick(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://pass.gyanitheme.com/"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://www.techkhulasha.com/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(5)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
 
 #######################################################
 # Gyanilinks - gtlinks.me
@@ -1607,7 +1627,7 @@ def atglinks(url):
 def atglinkss(url):
     atg = ""
     if "&url=" in url:
-        atg = str(url).split("&url=")[-1]
+        atg = str(url).split("&url=")[+1]
         atg = base64.b64decode(str(atg).replace("&type=2","")).decode("utf-8")
     return str(atg)
 
@@ -1952,20 +1972,39 @@ def tnshortnet(url):
         return "Something went wrong :("
 
 
+#def dalink(url):
+#    client = cloudscraper.create_scraper(allow_brotli=False)
+#    DOMAIN = "https://otha.tamilhit.tech"
+#    url = url[:-1] if url[-1] == "/" else url
+#    code = url.split("/")[-1]
+#    final_url = f"{DOMAIN}/{code}"
+#    ref = "https://tamilhit.tech"
+#    h = {"referer": ref}
+#    response = client.get(final_url, headers=h)
+#    soup = BeautifulSoup(response.text, "html.parser")
+#    inputs = soup.find_all("input")
+#    data = {input.get("name"): input.get("value") for input in inputs}
+#    h = {"x-requested-with": "XMLHttpRequest"}
+#    time.sleep(9)
+#    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+#    try:
+#        return r.json()["url"]
+#    except BaseException:
+#        return "Something went wrong :("
+
+
 def dalink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://otha.tamilhit.tech"
+    DOMAIN = "https://dalink.in/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://tamilhit.tech"
-    h = {"referer": ref}
-    response = client.get(final_url, headers=h)
-    soup = BeautifulSoup(response.text, "html.parser")
+    resp = client.get(final_url)
+    soup = BeautifulSoup(resp.content, "html.parser")
     inputs = soup.find_all("input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(9)
+    time.sleep(10)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
         return r.json()["url"]
@@ -2274,7 +2313,32 @@ def mdisklink(url):
     try: return str(r.json()["url"])
     except BaseException:
         return "Something went wrong :("
+
+def happyfile(url):
+    client = requests.session()
+    DOMAIN = "https://happyfile.dtglinks.in/"
+    url = url[:-1] if url[-1] == '/' else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://technology.msinfo.in/"
+    h = {"referer": ref}
+    while len(client.cookies) == 0:
+        resp = client.get(final_url,headers=h)
+        time.sleep(7)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = { input.get('name'): input.get('value') for input in inputs }
+    h = { "x-requested-with": "XMLHttpRequest" }
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try: return str(r.json()["url"])
+    except BaseException:
+        return "Something went wrong :("
+
+
 #Jai Add Later
+
+
 ##########################################################################
 # helpers
 
@@ -2308,6 +2372,10 @@ def shortners(url):
     elif "https://shortingly.in/" in url:
         print("entered shortingly:", url)
         return shortingly(url)
+
+    elif "https://shortingly.click/" in url or "https://pass.gyanitheme.com/":
+        print("entered shortinglyclick:", url)
+        return shortinglyclick(url)
 
     # gyanilinks
     elif "https://gtlinks.me/" in url:
@@ -2405,7 +2473,7 @@ def shortners(url):
         return mdiskshortner(url)
 
     # mdiskpro
-    elif "https://mdisk.pro/" in url:
+    elif "https://mdisk.pro/" in url or "https://omegalinks.in" in url:
         print("entered mdiskpro:", url)
         return mdiskpro(url)
 
@@ -2613,6 +2681,10 @@ def shortners(url):
     elif "https://powerdisk.pro" in url:
         print("entered powerlinkz:",url)
         return powerdisk(url)
+
+    elif "https://happyfile.dtglinks.in" in url:
+        print("entered happyfile:",url)
+        return happyfile(url)
 
     elif "https://viplinks.io" in url or "https://m.vip-link.net" in url:
         print("entered viplinks:",url)
