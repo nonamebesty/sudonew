@@ -2377,7 +2377,7 @@ def shortners(url):
         print("entered shortingly:", url)
         return shortingly(url)
 
-    elif "https://shortingly.click/" in url or "https://pass.gyanitheme.com/":
+    elif "https://shortingly.click/" in url or "https://pass.gyanitheme.com/" in url:
         print("entered shortinglyclick:", url)
         return shortinglyclick(url)
 
