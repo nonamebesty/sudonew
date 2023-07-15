@@ -1287,7 +1287,7 @@ def xpshort(url):
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://techboot.in/"
+    ref = "https://www.techboot.in/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
@@ -2359,13 +2359,13 @@ def happyfile(url):
         return "Something went wrong :("
 
 
-def omnify(url):
+def omnifly(url):
     client = requests.session()
-    DOMAIN = "https://f.omnify.in.net/"
+    DOMAIN = "https://f.omnifly.in.net/"
     url = url[:-1] if url[-1] == '/' else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://allserviceindia.in/"
+    ref = "https://allserviceindia.in/archives/"
     h = {"referer": ref}
     while len(client.cookies) == 0:
         resp = client.get(final_url,headers=h)
@@ -2753,11 +2753,11 @@ def shortners(url):
         print("entered powerlinkz:",url)
         return powerdisk(url)
 
-    elif "https://l.omnify.in.net/" in url or "https://f.omnify.in.net/" in url:
-        print("entered Omnify:",url)
-        return omnify(url)
+    elif "https://l.omnifly.in.net/" in url or "https://f.omnifly.in.net/" in url:
+        print("entered Omnifly:",url)
+        return omnifly(url)
 
-    elif "https://happyfiles.dtglinks.in" in url:
+    elif "https://happyfiles.dtglinks.in/" in url or "https://happyfile.dtglinks.in/" in url:
         print("entered happyfile:",url)
         return happyfile(url)
 
