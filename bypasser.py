@@ -1287,7 +1287,7 @@ def xpshort(url):
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://www.tech2ind.in/"
+    ref = "https://techboot.in/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
@@ -2339,11 +2339,33 @@ def mdisklink(url):
 
 def happyfile(url):
     client = requests.session()
-    DOMAIN = "https://happyfile.dtglinks.in/"
+    DOMAIN = "https://happyfiles.dtglinks.in/"
     url = url[:-1] if url[-1] == '/' else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
     ref = "https://technology.msinfo.in/"
+    h = {"referer": ref}
+    while len(client.cookies) == 0:
+        resp = client.get(final_url,headers=h)
+        time.sleep(7)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = { input.get('name'): input.get('value') for input in inputs }
+    h = { "x-requested-with": "XMLHttpRequest" }
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try: return str(r.json()["url"])
+    except BaseException:
+        return "Something went wrong :("
+
+
+def omnify(url):
+    client = requests.session()
+    DOMAIN = "https://f.omnify.in.net/"
+    url = url[:-1] if url[-1] == '/' else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://allserviceindia.in/"
     h = {"referer": ref}
     while len(client.cookies) == 0:
         resp = client.get(final_url,headers=h)
@@ -2709,7 +2731,11 @@ def shortners(url):
         print("entered powerlinkz:",url)
         return powerdisk(url)
 
-    elif "https://happyfile.dtglinks.in" in url:
+    elif "https://l.omnify.in.net/" in url: or "https://f.omnify.in.net/" in url
+        print("entered Omnify:",url)
+        return omnify(url)
+
+    elif "https://happyfiles.dtglinks.in" in url:
         print("entered happyfile:",url)
         return happyfile(url)
 
