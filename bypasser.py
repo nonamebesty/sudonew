@@ -2381,6 +2381,28 @@ def omnify(url):
         return "Something went wrong :("
 
 
+def bindaas(url):
+    client = requests.session()
+    DOMAIN = "https://thebindaas.com/"
+    url = url[:-1] if url[-1] == '/' else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://appsinsta.com/"
+    h = {"referer": ref}
+    while len(client.cookies) == 0:
+        resp = client.get(final_url,headers=h)
+        time.sleep(7)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = { input.get('name'): input.get('value') for input in inputs }
+    h = { "x-requested-with": "XMLHttpRequest" }
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try: return str(r.json()["url"])
+    except BaseException:
+        return "Something went wrong :("
+
+
 #Jai Add Later
 
 
@@ -2731,13 +2753,17 @@ def shortners(url):
         print("entered powerlinkz:",url)
         return powerdisk(url)
 
-    elif "https://l.omnify.in.net/" in url: or "https://f.omnify.in.net/" in url
+    elif "https://l.omnify.in.net/" in url or "https://f.omnify.in.net/" in url:
         print("entered Omnify:",url)
         return omnify(url)
 
     elif "https://happyfiles.dtglinks.in" in url:
         print("entered happyfile:",url)
         return happyfile(url)
+
+    elif "https://thebindaas.com/" in url or "https://bindaaslinks.com/" in url:
+        print("entered bindaas:",url)
+        return bindaas(url)
 
     elif "https://viplinks.io" in url or "https://m.vip-link.net" in url:
         print("entered viplinks:",url)
