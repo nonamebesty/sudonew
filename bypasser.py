@@ -2686,8 +2686,8 @@ def shortners(url):
 
         # greylink
     elif "https://greylinks.in/" in url:
-        print("entered atglinks:", url)
-        return atglinks(url)
+        print("entered greylink:", url)
+        return greylink(url)
 
     # greylinks
     elif "https://go.greymatterslinks.in/" in url:
