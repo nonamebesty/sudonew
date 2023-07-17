@@ -1696,7 +1696,7 @@ def atglinkss(url):
 
 
 def greylink(url):
-    DOMAIN = "https://go.greymatterslinks.in/"
+    DOMAIN = "https://go.greymatterslinks.in"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
