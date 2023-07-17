@@ -1494,6 +1494,25 @@ def rslinks(url):
 
 # tinyfy
 
+def tinyfy(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://tinyfy.in/"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://www.meclipstudy.in/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
 
 def tiny(url):
     client = requests.session()
@@ -1654,6 +1673,43 @@ def atglinkss(url):
         atg = base64.b64decode(str(atg).replace("&type=2","")).decode("utf-8")
     return str(atg)
 
+
+#def greylink(url):
+#    client = cloudscraper.create_scraper(allow_brotli=False)
+#    DOMAIN = "https://go.greymatterslinks.in/"
+#    url = url[:-1] if url[-1] == "/" else url
+#    code = url.split("/")[-1]
+#    final_url = f"{DOMAIN}/{code}"
+#    ref = "https://djqunjab.in/"
+#    h = {"referer": ref}
+#    response = client.get(final_url, headers=h)
+#    soup = BeautifulSoup(response.text, "html.parser")
+#    inputs = soup.find_all("input")
+#    data = {input.get("name"): input.get("value") for input in inputs}
+#    h = {"x-requested-with": "XMLHttpRequest"}
+#    time.sleep(13)
+#    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+#    try:
+#        return r.json()["url"]
+#    except BaseException:
+#        return "Something went wrong :("
+
+
+def greylink(url):
+    DOMAIN = "https://go.greymatterslinks.in/"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    return final_url
+
+
+def greylinks(url):
+    grey = ""
+    if "&url=" in url:
+        grey = str(url).split("&url=")[+1]
+        grey = base64.b64decode(str(grey).replace("&type=2","")).decode("utf-8")
+    return str(grey)
+
 def shrinke(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     DOMAIN = "https://shrinke.me/"
@@ -1729,25 +1785,6 @@ def earnlink(url):
 
 # greylink
 
-def greylink(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://go.greymatterslinks.in/"
-    url = url[:-1] if url[-1] == "/" else url
-    code = url.split("/")[-1]
-    final_url = f"{DOMAIN}/{code}"
-    ref = "https://djqunjab.in/"
-    h = {"referer": ref}
-    response = client.get(final_url, headers=h)
-    soup = BeautifulSoup(response.text, "html.parser")
-    inputs = soup.find_all("input")
-    data = {input.get("name"): input.get("value") for input in inputs}
-    h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(13)
-    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-    try:
-        return r.json()["url"]
-    except BaseException:
-        return "Something went wrong :("
 
     
 # link1s
@@ -2578,6 +2615,10 @@ def shortners(url):
         print("entered tinyfy:", url)
         return tiny(url)
 
+    elif "https://tinyfy.in/" in url or "https://TinyFy.in/" in url:
+        print("entered tinyfy:", url)
+        return tinyfy(url)
+
     # easysky
     elif "m.easysky.in" in url:
         print("entered easysky:", url)
@@ -2638,10 +2679,22 @@ def shortners(url):
         print("entered earnlink:", url)
         return earnlink(url)
 
-    # greylink
-    elif "https://greylinks.in/" in url or "https://go.greymatterslinks.in/" in url:
-        print("entered greylink:", url)
-        return greylink(url)
+#    # greylink
+#    elif "https://greylinks.in/" in url or "https://go.greymatterslinks.in/" in url:
+#        print("entered greylink:", url)
+#        return greylink(url)
+
+        # greylink
+    elif "https://greylinks.in/" in url:
+        print("entered atglinks:", url)
+        return atglinks(url)
+
+    # greylinks
+    elif "https://go.greymatterslinks.in/" in url:
+        print("entered greylinks:", url)
+        return greylinks(url)
+
+
         
     elif "https://gotolink.mdisklink.link/" in url or "https://mdisklink.link/" in url:
         print("entered mdisklink:", url)
