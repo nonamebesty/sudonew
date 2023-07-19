@@ -1036,7 +1036,7 @@ def gplinks(url):
     DOMAIN = "https://gplinks.co/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
-    final_url = f"{DOMAIN}/{code}"
+    final_url = f"{DOMAIN}/{code}/?vid=175429260"
     ref = "https://revadvert.com/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
