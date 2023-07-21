@@ -1732,11 +1732,11 @@ def shrinke(url):
 # kpslink
 def kpslink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://download.kpslink.in"
+    DOMAIN = "https://get.infotamizhan.xyz"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://infotamizhan.xyz/"
+    ref = "https://insuranceworld.in/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
