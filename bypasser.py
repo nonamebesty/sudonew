@@ -1736,7 +1736,7 @@ def kpslink(url):
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://insuranceworld.in/"
+    ref = "https://www.infotamizhan.xyz/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
