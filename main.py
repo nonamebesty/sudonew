@@ -78,7 +78,7 @@ def loopthread(message, otherss=False):
     if uid not in ADMIN_LIST:
         result = collection.find_one({"user_id": uid})
         if result is None:
-            ad_code = str_to_b64(f"{uid}:{str(get_current_time() + 43200)}")
+            ad_code = str_to_b64(f"{uid}:{str(get_current_time() + 432000)}")
             ad_url = shorten_url(f"https://telegram.me/{U_NAME}?start={ad_code}")
             app.send_message(
                 message.chat.id,
@@ -97,7 +97,7 @@ def loopthread(message, otherss=False):
             )
             return
         elif int(result["time_out"]) < get_current_time():
-            ad_code = str_to_b64(f"{uid}:{str(get_current_time() + 43200)}")
+            ad_code = str_to_b64(f"{uid}:{str(get_current_time() + 432000)}")
             ad_url = shorten_url(f"https://telegram.me/{U_NAME}?start={ad_code}")
             app.send_message(
                 message.chat.id,
@@ -235,7 +235,7 @@ async def send_start(
                     reply_to_message_id=message.id,
                 )
                 return
-            if int(ad_msg.split(":")[1]) > int(get_current_time() + 43200):
+            if int(ad_msg.split(":")[1]) > int(get_current_time() + 432000):
                 await app.send_message(
                     message.chat.id,
                     "Dont Try To Be Over Smart",
