@@ -18,7 +18,7 @@ from scraper import scrapper, scrapper_sites
 from texts import HELP_TEXT
 
 # bot
-bot_token = os.environ.get("TOKEN", "5677133402:AAERC4FCHfXNr2OK3nXh002Pn-c9BYpFLVc")
+bot_token = os.environ.get("TOKEN", "6665032973:AAFA-YNQAbmH_tkrwaR_vMZnF18H15APnHw")
 api_hash = os.environ.get("HASH", "fcdc178451cd234e63faefd38895c991") 
 api_id = os.environ.get("ID", "1923471")
 OWNER_ID = os.environ.get("OWNER_ID", "880087645")
@@ -26,9 +26,9 @@ ADMIN_LIST = [int(ch) for ch in (os.environ.get("ADMIN_LIST", f"{OWNER_ID}")).sp
 OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "JAsuran2p0")
 PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-100997492410")
 GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
-UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "Jasuranserials"))
+UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", ""))
 DB_URL = os.environ.get("DB_URL", "mongodb+srv://leecher:leecher@cluster0.606mkpi.mongodb.net/?retryWrites=true&w=majority")
-U_NAME = os.environ.get("BOT_USERNAME", "asubypassbot")
+U_NAME = os.environ.get("BOT_USERNAME", "ASLinkBypasserBOt")
 
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)
 
