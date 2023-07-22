@@ -26,7 +26,7 @@ ADMIN_LIST = [int(ch) for ch in (os.environ.get("ADMIN_LIST", f"{OWNER_ID}")).sp
 OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "JAsuran2p0")
 PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-100997492410")
 GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
-UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", ""))
+UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "Jasuranserials"))
 DB_URL = os.environ.get("DB_URL", "mongodb+srv://leecher:leecher@cluster0.606mkpi.mongodb.net/?retryWrites=true&w=majority")
 U_NAME = os.environ.get("BOT_USERNAME", "ASLinkBypasserBOt")
 
