@@ -8,7 +8,7 @@ from urllib.parse import quote, unquote, urlparse
 import cloudscraper
 import PyBypass
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString, Tag
 from dotenv import load_dotenv
 from lxml import etree
 import os
