@@ -2316,8 +2316,8 @@ def viplinks(url):
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
     #ref = "https://tracktotech.in/"
-    #ref = "https://lyricsbaazaar.com/"
-    ref = "https://thebloggerspoint.in/"
+    ref = "https://lyricsbaazaar.com/"
+    #ref = "https://thebloggerspoint.in/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
