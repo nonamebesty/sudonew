@@ -1713,12 +1713,14 @@ def shrinke(url):
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    resp = client.get(final_url)
+    ref = "https://mrproblogger.com/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
     inputs = soup.find_all("input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(13)
+    time.sleep(8)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
         return r.json()["url"]
