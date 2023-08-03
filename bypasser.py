@@ -2365,7 +2365,7 @@ def mdisklink(url):
     inputs = soup.find_all("input")
     data = { input.get('name'): input.get('value') for input in inputs }
     h = { "x-requested-with": "XMLHttpRequest" }
-    time.sleep(8)
+    time.sleep(10)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try: return str(r.json()["url"])
     except BaseException:
@@ -2713,7 +2713,7 @@ def shortners(url):
 
 
         
-    elif "https://gotolink.mdisklink.link/" in url or "https://mdisklink.link/" in url or "https://download.mdisklink.link/" in url:
+    elif "https://gas.yosite.net/" in url or "https://mdisklink.link/" in url or "https://download.mdisklink.link/" in url:
         print("entered mdisklink:", url)
         return mdisklink(url)
 
