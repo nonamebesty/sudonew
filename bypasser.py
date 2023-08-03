@@ -2352,11 +2352,11 @@ def viplinks(url):
 
 def mdisklink(url):
     client = requests.session()
-    DOMAIN = "https://gotolink.mdisklink.link/"
+    DOMAIN = "https://gas.yosite.net/"
     url = url[:-1] if url[-1] == '/' else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://loans.yosite.net/"
+    ref = "https://yosite.net/"
     h = {"referer": ref}
     while len(client.cookies) == 0:
         resp = client.get(final_url,headers=h)
@@ -2713,7 +2713,7 @@ def shortners(url):
 
 
         
-    elif "https://gotolink.mdisklink.link/" in url or "https://mdisklink.link/" in url:
+    elif "https://gotolink.mdisklink.link/" in url or "https://mdisklink.link/" in url or "https://download.mdisklink.link/" in url:
         print("entered mdisklink:", url)
         return mdisklink(url)
 
