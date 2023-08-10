@@ -2043,7 +2043,7 @@ def tnshort(url):
 
 def dalink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://www.tamilhit.tech/"
+    DOMAIN = "https://www.tamilhit.tech/blog//"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
