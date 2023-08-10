@@ -2043,11 +2043,11 @@ def tnshort(url):
 
 def dalink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://end.tamilhit.tech/"
+    DOMAIN = "https://www.tamilhit.tech"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://tamilhit.tech"
+    ref = "https://www.tamilhit.tech/"
     h = {"referer": ref}
     response = client.get(final_url, headers=h)
     soup = BeautifulSoup(response.text, "html.parser")
