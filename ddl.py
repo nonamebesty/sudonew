@@ -618,6 +618,7 @@ def uploadee(url: str) -> str:
 
 
 def terabox(url) -> str:
+def terabox(url) -> str:
     sess = session()
     while True:
           try: 
@@ -662,6 +663,7 @@ def terabox(url) -> str:
 
     if result['isdir'] != '0':return "ERROR: Can't download folder"
     return result.get('dlink',"Error")
+
 
 
 
