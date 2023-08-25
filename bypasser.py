@@ -700,12 +700,20 @@ def dropbox(url):
 
 
 def shareus(url):
-    token = url.split("=")[-1]
-    bypassed_url = (
-        "https://us-central1-my-apps-server.cloudfunctions.net/r?shortid=" + token
-    )
-    response = requests.get(bypassed_url).text
-    return response
+    headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',}
+    DOMAIN = "https://us-central1-my-apps-server.cloudfunctions.net"
+    sess = requests.session()
+
+    code = url.split("/")[-1]
+    params = {'shortid': code, 'initial': 'true', 'referrer': 'https://shareus.io/',}
+    response = requests.get(f'{DOMAIN}/v', params=params, headers=headers)
+
+    for i in range(1,4):
+        json_data = {'current_page': i,}
+        response = sess.post(f'{DOMAIN}/v', headers=headers, json=json_data)
+
+    response = sess.get(f'{DOMAIN}/get_link', headers=headers).json()
+    return response["link_info"]["destination"]
 
 def shrslink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
@@ -2451,6 +2459,52 @@ def vnshortener(url):
     try: return r.json()['url']
     except: return "Something went wrong :("
 
+# moneykamalo
+
+def moneykamalo(url):
+    client = requests.session()
+    DOMAIN = "https://go.moneykamalo.com"
+    url = url[:-1] if url[-1] == '/' else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://blog.techkeshri.com/"
+    h = {"referer": ref}
+    resp = client.get(final_url,headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = { input.get('name'): input.get('value') for input in inputs }
+    h = { "x-requested-with": "XMLHttpRequest" }
+    time.sleep(5)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()['url']
+    except: return "Something went wrong :("
+	    
+
+##################################################################################################### 
+# lolshort
+
+def lolshort(url):
+    client = requests.session()
+    DOMAIN = "https://get.lolshort.tech/"
+    url = url[:-1] if url[-1] == '/' else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://tech.animezia.com/"
+    h = {"referer": ref}
+    resp = client.get(final_url,headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = { input.get('name'): input.get('value') for input in inputs }
+    h = { "x-requested-with": "XMLHttpRequest" }
+    time.sleep(5)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()['url']
+    except: return "Something went wrong :("
+
+
+
 #Jai Add Later
 
 
@@ -2479,14 +2533,10 @@ def shortners(url):
         return filecrypt(url)
 
     # shareus
-    elif "https://shareus.io/" in url:
-        print("entered shareus:", url)
+    elif "https://shareus." in url or "https://shrs.link/" in url:
+        print("entered shareus: ",url)
         return shareus(url)
     
-    elif "https://shrs.link/" in url or "https://shrslink.xyz/" in url:
-        print("entered shrslink:", url)
-        return shrslink(url)
-
     # shortingly
     elif "https://shortingly.in/" in url:
         print("entered shortingly:", url)
@@ -2495,6 +2545,17 @@ def shortners(url):
     elif "https://shortingly.click/" in url or "https://pass.gyanitheme.com/" in url:
         print("entered shortinglyclick:", url)
         return shortinglyclick(url)
+
+    # moneykamalo
+    elif "earn.moneykamalo.com" in url:
+        print("entered moneykamalo: ",url)
+        return moneykamalo(url)
+	    
+    # lolshort
+    elif "http://go.lolshort.tech/" in url or "https://go.lolshort.tech/" in url:
+        print("entered lolshort: ",url)
+        return lolshort(url)
+
 
     # gyanilinks
     elif "https://gtlinks.me/" in url:
