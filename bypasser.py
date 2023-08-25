@@ -2503,6 +2503,24 @@ def lolshort(url):
         return r.json()['url']
     except: return "Something went wrong :("
 
+def indy(url):
+    client = requests.session()
+    DOMAIN = "https://download.indyshare.net/"
+    url = url[:-1] if url[-1] == '/' else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://bestdjsong.com/"
+    h = {"referer": ref}
+    resp = client.get(final_url,headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = { input.get('name'): input.get('value') for input in inputs }
+    h = { "x-requested-with": "XMLHttpRequest" }
+    time.sleep(5)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()['url']
+    except: return "Something went wrong :("
 
 
 #Jai Add Later
@@ -2882,6 +2900,11 @@ def shortners(url):
         print("entered vnshortener:",url)
         return vnshortener(url)
 
+    elif "https://indyshare.net/" in url:
+        print("entered IndyShare:",url)
+        return indy(url)
+
+	
     elif "https://l.omnifly.in.net/" in url or "https://f.omnifly.in.net/" in url:
         print("entered Omnifly:",url)
         return omnifly(url)
