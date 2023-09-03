@@ -2047,7 +2047,7 @@ def lksfycom(url):
     inputs = soup.find_all("input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(8)
+    time.sleep(10)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
         return str(r.json()["url"])
@@ -2770,7 +2770,7 @@ def shortners(url):
         print("entered tnshort:", url)
         return tnshort(url)
 
-    elif "https://lksfy.com/" in url:
+    elif "https://lksfy.com/" in url or "https://lksfy.site/":
         print("entered lksfy:", url)
         return lksfycom(url)
 
