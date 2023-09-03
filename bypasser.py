@@ -2034,7 +2034,7 @@ def tnshort(url):
     except BaseException:
         return "Something went wrong :("
 
-def lksfy(url):
+def lksfycom(url):
     DOMAIN = "https://lksfy.site/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
@@ -2767,9 +2767,9 @@ def shortners(url):
 
     elif "https://lksfy.com/" in url:
         print("entered lksfy:", url)
-        return lksfy(url)
+        return lksfycom(url)
 
-    # onepage
+    # ole
     elif "https://onepagelink.in" in url or "https://go.onepagelink.in" in url:
         print("entered onepagelinkin:", url)
         return onepagelinkin(url)
