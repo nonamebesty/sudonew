@@ -2034,8 +2034,8 @@ def tnshort(url):
     except BaseException:
         return "Something went wrong :("
 
-def tnshortnet(url):
-    DOMAIN = "https://news.speedynews.xyz/"
+def lksfy(url):
+    DOMAIN = "https://lksfy.site/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
@@ -2045,7 +2045,7 @@ def tnshortnet(url):
     inputs = soup.find(id="go-link").find_all(name="input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(8)
+    time.sleep(6)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     return r.json()["url"]
 
@@ -2764,6 +2764,10 @@ def shortners(url):
     elif "https://link.tnshort.net/" in url:
         print("entered tnshort:", url)
         return tnshort(url)
+
+    elif "https://lksfy.com/" in url:
+        print("entered lksfy:", url)
+        return lksfy(url)
 
     # onepage
     elif "https://onepagelink.in" in url or "https://go.onepagelink.in" in url:
