@@ -2770,7 +2770,7 @@ def shortners(url):
         print("entered tnshort:", url)
         return tnshort(url)
 
-    elif "https://lksfy.com/" in url or "https://lksfy.site/":
+    elif "https://lksfy.com/" in url or "https://lksfy.site/" in url:
         print("entered lksfy:", url)
         return lksfycom(url)
 
@@ -2866,7 +2866,7 @@ def shortners(url):
         return mplaylink(url)
 
 # tnvalue
-    elif "https://link.tnvalue.in/" in url or "https://short.tnvalue.in/" in url or "https://get.tnvalue.in/" in url:
+    elif "https://link.tnvalue.in/" in url or "https://short.tnvalue.in/" in url or "https://page.tnvalue.in/" in url:
         print("entered tnvalue:", url)
         return tnvalue(url)
 
