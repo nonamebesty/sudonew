@@ -2452,7 +2452,7 @@ def vnshortener(url):
     DOMAIN = "https://vnshortener.com/"
     org = "https://nishankhatri.xyz"
     PhpAcc = DOMAIN + "link/new.php"
-    ref = "https://nishankhatri.com.np/"
+    ref = "https://sugarona.com/"
     go = DOMAIN + "links/go"
 
     code = url.split("/")[3]
