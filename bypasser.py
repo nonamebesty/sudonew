@@ -1998,7 +1998,7 @@ def pkinme(url):
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://weightloss.techkeshri.com/"
+    ref = "https://techkeshri.com/"
     h = {"referer": ref}
     response = client.get(final_url, headers=h)
     soup = BeautifulSoup(response.text, "html.parser")
@@ -2425,11 +2425,11 @@ def omnifly(url):
 
 def bindaas(url):
     client = requests.session()
-    DOMAIN = "https://thebindaas.com/"
+    DOMAIN = "https://thebindaas.com/blog/"
     url = url[:-1] if url[-1] == '/' else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://appsinsta.com/"
+    ref = "https://blog.appsinsta.com/"
     h = {"referer": ref}
     while len(client.cookies) == 0:
         resp = client.get(final_url,headers=h)
