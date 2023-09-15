@@ -1951,11 +1951,11 @@ def tamizhmasters(url):
 
 def krownlinks(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://go.hipsonyc.com/"
+    DOMAIN = "https://earn.hostadviser.net/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://hipsonyc.com/"
+    ref = "https://hostadviser.net/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
