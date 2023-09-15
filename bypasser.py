@@ -1967,7 +1967,7 @@ def krownlinks(url):
     try:
         return str(r.json()["url"])
     except BaseException:
-        return "Something went wrong :("
+        return "Fixed Soon :("
 
 
 def seturl(url):
