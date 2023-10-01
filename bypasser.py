@@ -2016,7 +2016,8 @@ def pkinme(url):
  #tnshort.net
 def tnshort(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://news.speedynews.xyz/"
+    #DOMAIN = "https://news.speedynews.xyz/"
+    DOMAIN = "https://go.tnshort.net/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
