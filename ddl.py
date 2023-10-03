@@ -626,7 +626,7 @@ def terabox(url) -> str:
     url = res.url
 
     key = url.split('?surl=')[-1]
-    url = f'http://data.4funbox.com/wap/share/filelist?surl={key}'
+    url = f'http://www.teraboxapp.com/share/filelist?surl={key}'
     sess.cookies.update(TERA_COOKIE)
 
     while True:
@@ -647,7 +647,7 @@ def terabox(url) -> str:
 
     while True:
         try:
-            res = sess.get(f'https://data.4funbox.com/share/list?app_id=250528&jsToken={jsToken}&shorturl={key}&root=1')
+            res = sess.get(f'https://www.teraboxapp.com/share/list?app_id=250528&shorturl={key}&root=1')
             print("connected")
             break
         except: print("retrying")
