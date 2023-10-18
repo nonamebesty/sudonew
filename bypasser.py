@@ -2129,6 +2129,47 @@ def vipurl(url):
     except BaseException:
         return "Something went wrong :("
 
+def zxlink(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://zxlink.in/"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://info.gorating.in/"
+    h = {"referer": ref}
+    response = client.get(final_url, headers=h)
+    soup = BeautifulSoup(response.text, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(5)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
+
+def vipurl(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://count.vipurl.in/"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://ezeviral.com/"
+    h = {"referer": ref}
+    response = client.get(final_url, headers=h)
+    soup = BeautifulSoup(response.text, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(9)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return r.json()["url"]
+    except BaseException:
+        return "Something went wrong :("
+
 # owllinknet
 
 
@@ -2968,7 +3009,10 @@ def shortners(url):
     elif "https://destined.editionx.online/" in url:
         print("entered Destined:",url)
         return destined(url)
-
+	    
+    elif "https://zxlink.in/" in url:
+        print("entered Zxlink:",url)
+        return zxlink(url)
 	
     elif "https://l.omnifly.in.net/" in url or "https://f.omnifly.in.net/" in url:
         print("entered Omnifly:",url)
