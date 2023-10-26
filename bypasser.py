@@ -2048,7 +2048,7 @@ def tnshort(url):
 
 def link2paisa(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://go.link2paisa.con/"
+    DOMAIN = "https://go.link2paisa.com/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
@@ -2824,7 +2824,7 @@ def shortners(url):
         print("entered tnshort:", url)
         return tnshort(url)
 
-elif "https://link2paisa.com/" in url:
+    elif "https://link2paisa.com/" in url:
         print("entered link2paisa:", url)
         return link2paisa(url)
 
