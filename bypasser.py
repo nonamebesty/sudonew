@@ -775,22 +775,42 @@ def shortinglyclick(url):
 # Gyanilinks - gtlinks.me
 
 
+#def gyanilinks(url):
+#    DOMAIN = "https://go.hipsonyc.com/"
+#    client = cloudscraper.create_scraper(allow_brotli=False)
+#    url = url[:-1] if url[-1] == '/' else url
+#    code = url.split("/")[-1]
+#    final_url = f"{DOMAIN}/{code}"
+#    resp = client.get(final_url)
+#    soup = BeautifulSoup(resp.content, "html.parser")
+#    try: inputs = soup.find(id="go-link").find_all(name="input")
+#    except: return "Incorrect Link"
+#    data = { input.get('name'): input.get('value') for input in inputs }
+#    h = { "x-requested-with": "XMLHttpRequest" }
+#    time.sleep(10)
+#    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+#    try: return r.json()['url']
+#    except: return "Something went wrong :("
+
 def gyanilinks(url):
-    DOMAIN = "https://go.hipsonyc.com/"
     client = cloudscraper.create_scraper(allow_brotli=False)
-    url = url[:-1] if url[-1] == '/' else url
+    DOMAIN = "https://go.hipsonyc.com/"
+    url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    resp = client.get(final_url)
+    ref = "https://hipsonyc.com/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
-    try: inputs = soup.find(id="go-link").find_all(name="input")
-    except: return "Incorrect Link"
-    data = { input.get('name'): input.get('value') for input in inputs }
-    h = { "x-requested-with": "XMLHttpRequest" }
-    time.sleep(10)
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(8)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-    try: return r.json()['url']
-    except: return "Something went wrong :("
+    try:
+        return str(r.json()["url"])
+    except BaseException:
+        return "Something went wrong :("
 
 def destined(url):
     DOMAIN = "https://destined.editionx.online"
@@ -2843,7 +2863,7 @@ def shortners(url):
         return indshort(url)
 
         # atglinks
-    elif "https://files.technicalatg.com/" in url:
+    elif "https://files.technicalatg.com/" in url or "https://m.technicalatg.in/" in url:
         print("entered atglinks:", url)
         return atglinks(url)
 
