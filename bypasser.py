@@ -2863,7 +2863,7 @@ def shortners(url):
         return indshort(url)
 
         # atglinks
-    elif "https://files.technicalatg.com/" in url or "https://m.technicalatg.in/" in url:
+    elif "https://files.technicalatg.com/" in url or "https://f.technicalatg.in/" in url:
         print("entered atglinks:", url)
         return atglinks(url)
 
