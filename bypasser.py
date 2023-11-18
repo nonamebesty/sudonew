@@ -2944,7 +2944,7 @@ def shortners(url):
         return mplaylink(url)
 
 # tnvalue
-    elif "https://link.tnvalue.in/" in url or "https://short.tnvalue.in/" in url or "https://page.tnvalue.in/" in url:
+    elif "https://link.tnvalue.in/" in url or "https://short.tnvalue.in/" in url or "https://tnvalue.in/" in url:
         print("entered tnvalue:", url)
         return tnvalue(url)
 
