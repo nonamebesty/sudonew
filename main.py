@@ -235,7 +235,7 @@ async def send_start(
                     reply_to_message_id=message.id,
                 )
                 return
-            if int(ad_msg.split(":")[1]) > int(get_current_time() + 432000):
+            if int(ad_msg.split(":")[1]) > int(get_current_time() + 43200):
                 await app.send_message(
                     message.chat.id,
                     "Dont Try To Be Over Smart",
