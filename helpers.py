@@ -24,7 +24,7 @@ def get_readable_time(seconds):
     return dt.strftime('%Y-%m-%d %H:%M:%S')
 
 def shorten_url(url):
-    #site_url = f"https://atglinks.com/api?api=36b6661ad0b4ceeb21c980d665e8159e4e88d622&url={url}&format=text"
-    site_url = f"{url}"
-    #return str(requests.get(site_url).text)
-    return site_url
+    site_url = f"https://tnshort.net/api?api=003db0d0a2e56943b93dc0abd80e1260a17166c8&url={url}&format=text"
+    #site_url = f"{url}"
+    return str(requests.get(site_url).text)
+    #return site_url
