@@ -1,10 +1,10 @@
 if [ -z $UPSTREAM_REPO ]
 then
   echo "Cloning main Repository"
-  git clone https://github.com/bipinkrish/Link-Bypasser-Bot /Link-Bypasser-Bot
+  git clone https://github.com/Jegaa1/sudoa /sudoa
 else
   echo "Cloning Custom Repo from $UPSTREAM_REPO "
-  git clone $UPSTREAM_REPO /Link-Bypasser-Bot
+  git clone $UPSTREAM_REPO /sudoa
 fi
 cd /Link-Bypasser-Bot
 pip3 install -U -r requirements.txt
