@@ -1,13 +1,9 @@
-FROM rushidhar/bypass:latest
+FROM python:3.9
+WORKDIR /app
 
-WORKDIR /usr/src/app
-SHELL ["/bin/bash", "-c"]
-RUN chmod 777 /usr/src/app
+COPY requirements.txt /app/
+RUN pip3 install -r requirements.txt
 
+COPY . /app
 
-COPY requirements.txt .
-RUN pip3 install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-CMD ["python3", "main.py"]
+CMD flask run -h 0.0.0.0 -p 10000 & python3 main.py
