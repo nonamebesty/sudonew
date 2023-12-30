@@ -2069,7 +2069,7 @@ def tnshort(url):
  #mdisky
 def mdisky(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://go.bloggerishyt.in/"
+    DOMAIN = "https://go.bloggingaro.com/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
