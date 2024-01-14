@@ -18,7 +18,18 @@ from scraper import scrapper, scrapper_sites
 from texts import HELP_TEXT
 
 # bot
-j
+bot_token = os.environ.get("TOKEN", "")
+api_hash = os.environ.get("HASH", "") 
+api_id = os.environ.get("ID", "")
+OWNER_ID = os.environ.get("OWNER_ID", "")
+ADMIN_LIST = [int(ch) for ch in (os.environ.get("ADMIN_LIST", f"{OWNER_ID}")).split()]
+OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "")
+PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "")
+GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
+UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", ""))
+DB_URL = os.environ.get("DB_URL", "")
+U_NAME = os.environ.get("BOT_USERNAME", "")
+
 
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)
 
