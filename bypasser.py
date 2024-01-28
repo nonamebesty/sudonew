@@ -149,7 +149,32 @@ def scrapeIndex(url, username="none", password="none"):
 
 
 ################################################################
+def shortner_fpage_api(link):
+    link_pattern = r"https?://[\w.-]+/full\?api=([^&]+)&url=([^&]+)(?:&type=(\d+))?"
+    match = re.match(link_pattern, link)
+    if match:
+        try:
+            url_enc_value = match.group(2)
+            url_value = base64.b64decode(url_enc_value).decode("utf-8")
+            return url_value
+        except BaseException:
+            return None
+    else:
+        return None
 
+# Shortner Quick Link API
+
+def shortner_quick_api(link):
+    link_pattern = r"https?://[\w.-]+/st\?api=([^&]+)&url=([^&]+)"
+    match = re.match(link_pattern, link)
+    if match:
+        try:
+            url_value = match.group(2)
+            return url_value
+        except BaseException:
+            return None
+    else:
+        return None
 # AppDrive or DriveApp etc. Look-Alike Link and as well as the Account
 # Details (Required for Login Required Links only)
 
@@ -2675,11 +2700,19 @@ def ispresent(inlist, url):
 
 
 # shortners
-def shortners(url):
+#def shortners(url):
     # igg games
-    if "https://igg-games.com/" in url:
-        print("entered igg:", url)
-        return igggames(url)
+    #if "https://igg-games.com/" in url:
+        #print("entered igg:", url)
+        #return igggames(url)
+def shortners(url):
+    # Shortner Full Page API
+    if val := shortner_fpage_api(url):
+        return val
+
+    # Shortner Quick Link API
+    elif val := shortner_quick_api(url):
+        return val
 
     # filecrypt
     elif ("https://filecrypt.co/") in url or ("https://filecrypt.cc/" in url):
