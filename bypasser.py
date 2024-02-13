@@ -382,11 +382,11 @@ def psa_bypasser(psa_url):
 
 def rocklinks(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://rocklinks.net"
+    DOMAIN = "https://lnks.primarchweb.in/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://disheye.com/"
+    ref = "https://blog.disheye.com/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
