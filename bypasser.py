@@ -1789,20 +1789,20 @@ def shrinke(url):
 
 
 # kpslink
-def kpslink(url):
+def shrink4earn(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://get.infotamizhan.xyz"
+    DOMAIN = "https://shrinkforearn.in/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://www.infotamizhan.xyz/"
+    ref = "https://www.viralxns.com/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
     inputs = soup.find_all("input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(5)
+    time.sleep(8)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     try:
         return r.json()["url"]
@@ -2940,9 +2940,9 @@ def shortners(url):
         print("entered streemin:", url)
         return streemin(url)
 
-    elif "https://v2.kpslink.in/" in url:
-        print("entered v2kpslink:", url)
-        return v2kpslink(url)
+    elif "https://shrinkforearn.xyz/" in url:
+        print("entered shrink4earn:", url)
+        return shrink4earn(url)
 
 
     # earnlink
