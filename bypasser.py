@@ -1789,13 +1789,13 @@ def shrinke(url):
 
 
 # kpslink
-def shrink4earn(url):
+def earn2me(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    DOMAIN = "https://shrinkforearn.in/"
+    DOMAIN = "https://blog.filepresident.com/"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://www.viralxns.com/"
+    ref = "https://nichapk.com/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
@@ -2940,9 +2940,9 @@ def shortners(url):
         print("entered streemin:", url)
         return streemin(url)
 
-    elif "https://shrinkforearn.xyz/" in url:
-        print("entered shrink4earn:", url)
-        return shrink4earn(url)
+    elif "https://link.earn2me.com/" in url or "https://earn2me.com/" in url:
+        print("entered earn2me:", url)
+        return earn2me(url)
 
 
     # earnlink
