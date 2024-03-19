@@ -24,7 +24,7 @@ def get_readable_time(seconds):
     return dt.strftime('%Y-%m-%d %H:%M:%S')
 
 def shorten_url(url):
-    site_url = f"https://kingurl.in/api?api=96a6f765a685deb48603f2f2a4390e29a2b958ce&url={url}&format=text"
+    site_url = f"https://modijiurl.com/api?api=e5a0df550303e31db72c8924e40e706976a2adb2&url={url}&format=text"
     #site_url = f"{url}"
     return str(requests.get(site_url).text)
     #return site_url
