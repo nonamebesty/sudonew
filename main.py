@@ -17,6 +17,8 @@ from helpers import b64_to_str, get_current_time, shorten_url, str_to_b64
 from scraper import scrapper, scrapper_sites
 from texts import HELP_TEXT
 
+
+def getenv(var): return environ.get(var) or DATA.get(var, None)
 # bot
 bot_token = getenv("TOKEN")
 api_hash = getenv("HASH") 
