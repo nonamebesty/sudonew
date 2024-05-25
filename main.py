@@ -18,15 +18,15 @@ from scraper import scrapper, scrapper_sites
 from texts import HELP_TEXT
 
 # bot
-bot_token = os.environ.get("TOKEN", "6665032973:AAHgutSrXI5pPuLFbaI4e5oKtCvgVql-quI")
-api_hash = os.environ.get("HASH", "fcdc178451cd234e63faefd38895c991") 
-api_id = os.environ.get("ID", "1923471")
+bot_token = getenv("TOKEN")
+api_hash = getenv("HASH") 
+api_id = getenv("ID")
 OWNER_ID = os.environ.get("OWNER_ID","880087645")
 ADMIN_LIST = [int(ch) for ch in (os.environ.get("ADMIN_LIST", f"{OWNER_ID}")).split()]
 OWNER_USERNAME = "JAsuran2p0"
-PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1002099304315")
+PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1001775437494")
 GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
-UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL"))
+UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "AS_botzz"))
 DB_URL = os.environ.get("DB_URL", "mongodb+srv://dhanapal:dhanapal@dhanapal.pvrwtmv.mongodb.net/?retryWrites=true&w=majority")
 U_NAME = os.environ.get("BOT_USERNAME", "ASLinkBypasserBOt")
 
