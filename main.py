@@ -18,7 +18,7 @@ from scraper import scrapper, scrapper_sites
 from texts import HELP_TEXT
 
 # bot
-bot_token = os.environ.get("TOKEN", "6665032973:AAEoRsnrvaAr0Vn3bgrizVaMjezo2Stlh7I")
+bot_token = os.environ.get("TOKEN", "6665032973:AAHgutSrXI5pPuLFbaI4e5oKtCvgVql-quI")
 api_hash = os.environ.get("HASH", "fcdc178451cd234e63faefd38895c991") 
 api_id = os.environ.get("ID", "1923471")
 OWNER_ID = os.environ.get("OWNER_ID","880087645")
