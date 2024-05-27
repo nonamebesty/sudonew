@@ -2703,6 +2703,26 @@ def modijiurl(url):
     except BaseException:
         return "Something went wrong :("
 
+def kingurl(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://go.kingurl.in/"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{DOMAIN}/{code}"
+    ref = "https://a1.bankshiksha.in/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(7)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    try:
+        return str(r.json()["url"])
+    except BaseException:
+        return "Something went wrong :("
+
 #Jai Add Later
 
 
@@ -2921,6 +2941,11 @@ def shortners(url):
     elif "https://modijiurl.com/" in url:
         print("entered modijiurl:", url)
         return modijiurl(url)
+
+    # kingurl
+    elif "https://kingurl.in/" in url:
+        print("entered kingurl:", url)
+        return kingurl(url)
 
     elif "mdisky.link" in url:
         print("entered mdisky:", url)
