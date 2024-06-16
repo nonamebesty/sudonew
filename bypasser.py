@@ -2077,7 +2077,7 @@ def tnshort(url):
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
-    ref = "https://movies.djnonstopmusic.in/"
+    ref = "https://financeyogi.net/"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
@@ -2933,7 +2933,7 @@ def shortners(url):
         return linkbnao(url)
 
     # tnshort
-    elif "https://link.tnshort.net/" in url:
+    elif "https://link.tnshort.net/" in url or "https://tnseries.com/" in url or "https://link.tnseries.com/" in url:
         print("entered tnshort:", url)
         return tnshort(url)
 
@@ -2980,7 +2980,7 @@ def shortners(url):
         return atglinkss(url)
         
     # tnshort.net
-    elif "https://link.tnshort.net/" in url:
+    elif "https://link.tnshort.net/" in url or "https://tnseries.com/" in url or "https://link.tnseries.com/" in url:
         print("entered tnshortnet:", url)
         return tnshortnet(url)
 
