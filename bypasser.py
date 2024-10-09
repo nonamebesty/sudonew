@@ -2730,7 +2730,7 @@ def kingurl(url):
     DOMAIN = "https://earn.bankshiksha.in/click.php?LinkShortUrlID="
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
-    final_url = f"{DOMAIN}={code}"
+    final_url = f"{DOMAIN}{code}"
     return final_url
 
 
