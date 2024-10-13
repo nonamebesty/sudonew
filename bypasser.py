@@ -1497,7 +1497,7 @@ def adrinolink(url):
         url = "https://adrinolinks.in/" + url.split("/")[-1]
     client = cloudscraper.create_scraper(allow_brotli=False)
     DOMAIN = "https://adrinolinks.in"
-    ref = "https://amritadrino.com/"
+    ref = "https://myprivatejobs.com/"
     h = {"referer": ref}
     resp = client.get(url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
