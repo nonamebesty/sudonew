@@ -27,7 +27,7 @@ api_id = getenv("ID")
 OWNER_ID = os.environ.get("OWNER_ID","880087645")
 ADMIN_LIST = [int(ch) for ch in (os.environ.get("ADMIN_LIST", f"{OWNER_ID}")).split()]
 OWNER_USERNAME = "JAsuran2p0"
-PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "-1001775437494")
+PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "0")
 GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
 UPDATES_CHANNEL = str(os.environ.get("UPDATES_CHANNEL", "AS_botzz"))
 DB_URL = os.environ.get("DB_URL", "mongodb+srv://dhanapal:dhanapal@dhanapal.pvrwtmv.mongodb.net/?retryWrites=true&w=majority")
